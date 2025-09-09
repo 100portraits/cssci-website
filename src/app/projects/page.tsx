@@ -66,8 +66,8 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full transition-all font-medium ${
                   selectedCategory === category
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-white text-gray-700 hover:bg-primary hover:text-primary-foreground'
+                    ? 'bg-primary border text-primary-foreground'
+                    : 'bg-white border border-primary text-gray-700 hover:bg-primary hover:text-primary-foreground'
                 }`}
               >
                 {category}

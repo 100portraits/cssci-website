@@ -225,7 +225,7 @@ export default function BecomePartnerPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-primary/10 rounded-3xl transform -rotate-3"></div>
               <div className="relative bg-white rounded-3xl shadow-xl p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Why Partner with CSSci?
+                  Why Partner with <span className="underline underline-offset-4">CSS</span>ci?
                 </h2>
                 <ul className="space-y-3">
                   <li className="flex items-start">
@@ -284,7 +284,7 @@ export default function BecomePartnerPage() {
               Getting Involved: A Simple Process
             </h2>
             <p className="text-lg text-gray-600">
-              Becoming a CSSci partner is a straightforward process designed to create meaningful 
+              Becoming a <span className="underline underline-offset-4">CSS</span>ci partner is a straightforward process designed to create meaningful 
               collaboration while respecting partners' time constraints. The total time commitment 
               is manageable, requiring only 16-18 hours spread across 18 weeks.
             </p>
@@ -306,8 +306,8 @@ export default function BecomePartnerPage() {
               <p className="text-sm text-gray-600">Work with our team to shape the project</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-accent">3</span>
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-secondary">3</span>
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Meet Students</h3>
               <p className="text-sm text-gray-600">Kickoff event and team matching</p>
@@ -359,10 +359,10 @@ export default function BecomePartnerPage() {
               <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
                 CHALLENGE: {currentSemester.challenge}
               </span>
-              <span className="px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm font-medium">
+              <span className="px-4 py-2 bg-secondary/10 text-green-800 rounded-full text-sm font-medium">
                 TOPIC: {currentSemester.topic}
               </span>
-              <span className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
+              <span className="px-4 py-2 bg-accent/10 text-yellow-800 rounded-full text-sm font-medium">
                 LENGTH: {currentSemester.length}
               </span>
             </div>
@@ -412,7 +412,7 @@ export default function BecomePartnerPage() {
               <div key={index} className="bg-muted/20 rounded-xl overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-muted/30 transition-colors"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-muted/30 transition"
                 >
                   <span className="font-semibold text-gray-900">{faq.question}</span>
                   <svg
@@ -427,7 +427,7 @@ export default function BecomePartnerPage() {
                   </svg>
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-4">
+                  <div className="px-6 py-4">
                     <p className="text-gray-600">{faq.answer}</p>
                   </div>
                 )}

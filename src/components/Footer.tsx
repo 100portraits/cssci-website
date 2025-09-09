@@ -8,10 +8,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
-              </div>
-              <span className="font-bold text-xl">CSSci</span>
+
+              <span className="font-bold text-2xl"><span className='underline underline-offset-4'>CSS</span>ci</span>
             </div>
             <p className="text-white/70 text-sm">
               Computational Social Science at the University of Amsterdam
@@ -22,9 +20,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Program</h3>
             <ul className="space-y-2 text-white/70 text-sm">
-              <li><Link href="/about" className="hover:text-white transition-colors">About CSSci</Link></li>
-              <li><Link href="/curriculum" className="hover:text-white transition-colors">Curriculum</Link></li>
-              <li><Link href="/admissions" className="hover:text-white transition-colors">Admissions</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About <span className="underline underline-offset-4">CSS</span>ci</Link></li>
               <li><Link href="/resources" className="hover:text-white transition-colors">Student Resources</Link></li>
             </ul>
           </div>
@@ -36,7 +32,6 @@ export default function Footer() {
               <li><Link href="/partners" className="hover:text-white transition-colors">Current Partners</Link></li>
               <li><Link href="/projects" className="hover:text-white transition-colors">Projects</Link></li>
               <li><Link href="/become-partner" className="hover:text-white transition-colors">Become a Partner</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -45,11 +40,11 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li>University of Amsterdam</li>
-              <li>Science Park 904</li>
-              <li>1098 XH Amsterdam</li>
+              <li>Valckenierstraat 65-67</li>
+              <li>1018 XE Amsterdam</li>
               <li className="pt-2">
-                <a href="mailto:info@cssci.uva.nl" className="hover:text-white transition-colors">
-                  info@cssci.uva.nl
+                <a href="mailto:placeholder" className="hover:text-white transition-colors">
+                  placeholder@uva.nl
                 </a>
               </li>
             </ul>
@@ -57,7 +52,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/50 text-sm">
-          <p>&copy; {new Date().getFullYear()} CSSci Program, University of Amsterdam. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} <span className="underline underline-offset-4">CSS</span>ci Program, University of Amsterdam. All rights reserved.</p>
         </div>
       </div>
     </footer>

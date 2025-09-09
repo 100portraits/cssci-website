@@ -80,7 +80,7 @@ export default async function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                What makes <span className="text-primary">CSSci</span> different?
+                What makes <span className="text-primary"><span className="underline underline-offset-4">CSS</span>ci</span> different?
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 Students work directly with industry and academic partners in a 
@@ -124,7 +124,7 @@ export default async function Home() {
                     <div className="text-sm text-gray-600">Industry Partners</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-accent">3</div>
+                    <div className="text-4xl font-bold text-secondary">3</div>
                     <div className="text-sm text-gray-600">Years Program</div>
                   </div>
                   <div className="text-center">

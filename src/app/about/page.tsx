@@ -53,7 +53,7 @@ export default async function AboutPage() {
               <div className="relative bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div className="aspect-[4/3] bg-gradient-to-br from-muted to-white flex items-center justify-center">
                   <div className="text-center p-8">
-                    <div className="text-6xl font-bold text-primary mb-4">CSSci</div>
+                    <div className="text-6xl font-bold text-primary mb-4"><span className="underline underline-offset-4">CSS</span>ci</div>
                     <p className="text-gray-600">Shaping Tomorrow's Problem Solvers</p>
                   </div>
                 </div>

@@ -2,6 +2,8 @@ import PartnerCard from '@/components/PartnerCard'
 import { client, urlFor } from '@/sanity/lib/client'
 import { PARTNERS_QUERY } from '@/sanity/lib/queries'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
 
 async function getPartnersData() {
   try {

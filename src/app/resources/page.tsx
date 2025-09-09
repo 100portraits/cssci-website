@@ -1,6 +1,8 @@
 import { client } from '@/sanity/lib/client'
 import { RESOURCES_QUERY } from '@/sanity/lib/queries'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
 
 async function getResourcesData() {
   try {

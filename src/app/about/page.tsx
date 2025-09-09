@@ -3,6 +3,8 @@ import { ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
 import PortableTextContent from '@/components/PortableTextContent'
 import ContactForm from '@/components/ContactForm'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
 async function getAboutData() {
   try {
     const data = await client.fetch(ABOUT_PAGE_QUERY)

@@ -9,6 +9,8 @@ import {
   FEATURED_TESTIMONIALS_QUERY 
 } from '@/sanity/lib/queries'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
 // Fetch data with error handling
 async function getHomepageData() {
   try {

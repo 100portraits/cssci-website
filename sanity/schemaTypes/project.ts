@@ -60,6 +60,7 @@ export default defineType({
       options: {
         layout: 'tags',
       },
+      validation: (Rule) => Rule.required().min(1).max(5),
     }),
     defineField({
       name: 'featured',

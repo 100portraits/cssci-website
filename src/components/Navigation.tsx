@@ -12,10 +12,8 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <span className="text-white font-bold text-xl">C</span>
-            </div>
-            <span className="font-bold text-xl text-primary">CSSci</span>
+
+            <span className="font-bold text-2xl text-primary"><span className='underline underline-offset-4'>CSS</span>ci</span>
           </Link>
 
           {/* Desktop Navigation */}

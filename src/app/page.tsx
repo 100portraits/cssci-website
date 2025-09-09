@@ -32,15 +32,10 @@ export default async function Home() {
   const heroSubtitle = homepage?.heroSubtitle || 'University of Amsterdam (BSc)'
   const heroDescription = homepage?.heroDescription || 'Where innovation meets impact. Join a groundbreaking program that combines social science theories with advanced computational techniques to solve real-world challenges.'
 
-  // Split title for styling (first word vs rest)
-  const titleWords = heroTitle.split(' ')
-  const firstWord = titleWords[0]
-  const restOfTitle = titleWords.slice(1).join(' ')
-
   return (
     <div className="relative">
       {/* Hero Section with gradient background */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-white via-muted/20 to-white">
+      <section className="relative min-h-[90vh] flex lg:items-center overflow-hidden bg-gradient-to-br from-white via-muted/20 to-white">
         {/* Modern gradient mesh overlay */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(143,166,116,0.15),transparent_50%)]"></div>
@@ -48,11 +43,16 @@ export default async function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(18,66,64,0.05),transparent_70%)]"></div>
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
-          <div className="max-w-3xl">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-tight">
-              {firstWord}
-              <span className="block text-secondary">{restOfTitle}</span>
+        <div className="relative z-10  mx-auto px-12 lg:px-8 lg:py-20 lg:mt-0 mt-20">
+          <div className="">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-tight">
+              {heroTitle.split(' ').map((word: string, index: number) => (
+                <span key={index}>
+                  <span className="underline underline-offset-8">{word[0]}</span>
+                  {word.slice(1)}
+                  {index < heroTitle.split(' ').length - 1 && ' '}
+                </span>
+              ))}
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-4">
               {heroSubtitle}

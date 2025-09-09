@@ -11,14 +11,8 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ title, description, image, year, tags = [], link }: ProjectCardProps) {
-  const CardWrapper = link ? Link : 'div'
-  const cardProps = link ? { href: link } : {}
-
-  return (
-    <CardWrapper 
-      {...cardProps}
-      className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-    >
+  const content = (
+    <>
       {/* Image */}
       {image && (
         <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-secondary/10 to-primary/10">
@@ -68,6 +62,23 @@ export default function ProjectCard({ title, description, image, year, tags = []
           </div>
         )}
       </div>
-    </CardWrapper>
+    </>
+  )
+
+  if (link) {
+    return (
+      <Link 
+        href={link}
+        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 block"
+      >
+        {content}
+      </Link>
+    )
+  }
+
+  return (
+    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+      {content}
+    </div>
   )
 }

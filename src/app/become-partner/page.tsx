@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { client } from '@/sanity/lib/client'
+import { FAQS_QUERY } from '@/sanity/lib/queries'
 
 interface TimelinePhase {
   title: string
@@ -181,7 +183,7 @@ const semesters: Semester[] = [
   }
 ]
 
-const faqs = [
+const fallbackFaqs = [
   {
     question: 'What is the time commitment for partners?',
     answer: 'The total time commitment is approximately 16-18 hours spread across 18 weeks, including regular check-ins, feedback sessions, and on-campus events.'
@@ -207,6 +209,23 @@ const faqs = [
 export default function BecomePartnerPage() {
   const [selectedSemester, setSelectedSemester] = useState(1)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [faqs, setFaqs] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const data = await client.fetch(FAQS_QUERY)
+        setFaqs(data.length > 0 ? data : fallbackFaqs)
+      } catch (error) {
+        console.error('Error fetching FAQs:', error)
+        setFaqs(fallbackFaqs)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchFaqs()
+  }, [])
 
   const currentSemester = semesters.find(s => s.id === selectedSemester) || semesters[0]
 
@@ -408,7 +427,10 @@ export default function BecomePartnerPage() {
           </h2>
           
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
+            {loading ? (
+              <div className="text-center text-gray-600">Loading FAQs...</div>
+            ) : (
+              faqs.map((faq: any, index: number) => (
               <div key={index} className="bg-muted/20 rounded-xl overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
@@ -432,7 +454,8 @@ export default function BecomePartnerPage() {
                   </div>
                 )}
               </div>
-            ))}
+            ))
+            )}
           </div>
         </div>
       </section>

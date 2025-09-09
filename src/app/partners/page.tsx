@@ -1,7 +1,8 @@
 import PartnerCard from '@/components/PartnerCard'
+import { client, urlFor } from '@/sanity/lib/client'
+import { PARTNERS_QUERY } from '@/sanity/lib/queries'
 
-// This will be replaced with CMS data
-const partners = [
+const fallbackPartners = [
   {
     name: 'Amsterdam Municipality',
     description: 'Working together on urban challenges and digital transformation initiatives for citizen services.',
@@ -40,7 +41,35 @@ const partners = [
   }
 ]
 
-export default function PartnersPage() {
+const fallbackSuccessStories = [
+  {
+    title: 'Amsterdam Smart City Initiative',
+    description: 'Students developed a predictive model for bicycle traffic flow, helping the city optimize infrastructure planning. The solution is now being piloted in three districts.',
+    icon: 'check'
+  },
+  {
+    title: 'Digital Inclusion Platform',
+    description: 'In partnership with Tech for Good NL, students created an accessible platform that has helped over 500 elderly citizens navigate digital government services.',
+    icon: 'bolt'
+  }
+]
+
+async function getPartnersData() {
+  try {
+    const partners = await client.fetch(PARTNERS_QUERY)
+    return partners.length > 0 ? partners : fallbackPartners
+  } catch (error) {
+    console.error('Error fetching partners:', error)
+    return fallbackPartners
+  }
+}
+
+export default async function PartnersPage() {
+  const partners = await getPartnersData()
+  const successStories = partners
+    .filter((p: any) => p.successStory)
+    .map((p: any) => ({ title: p.name, description: p.successStory }))
+  const displayStories = successStories.length > 0 ? successStories : fallbackSuccessStories
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -66,8 +95,15 @@ export default function PartnersPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {partners.map((partner, index) => (
-              <PartnerCard key={index} {...partner} />
+            {partners.map((partner: any) => (
+              <PartnerCard 
+                key={partner._id || partner.name}
+                name={partner.name}
+                description={partner.description}
+                logo={partner.logo ? urlFor(partner.logo).width(200).height(100).url() : undefined}
+                category={partner.category}
+                website={partner.website}
+              />
             ))}
           </div>
         </div>
@@ -81,35 +117,25 @@ export default function PartnersPage() {
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+            {displayStories.slice(0, 2).map((story: any, index: number) => (
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
+                <div className="flex items-center mb-4">
+                  <div className={`w-12 h-12 ${index === 0 ? 'bg-primary/10' : 'bg-secondary/10'} rounded-full flex items-center justify-center mr-4`}>
+                    <svg className={`w-6 h-6 ${index === 0 ? 'text-primary' : 'text-secondary'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {story.icon === 'check' || index === 0 ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      )}
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">{story.title}</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Amsterdam Smart City Initiative</h3>
+                <p className="text-gray-600">
+                  {story.description}
+                </p>
               </div>
-              <p className="text-gray-600">
-                Students developed a predictive model for bicycle traffic flow, helping the city 
-                optimize infrastructure planning. The solution is now being piloted in three districts.
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Digital Inclusion Platform</h3>
-              </div>
-              <p className="text-gray-600">
-                In partnership with Tech for Good NL, students created an accessible platform that 
-                has helped over 500 elderly citizens navigate digital government services.
-              </p>
-            </div>
+            )) }
           </div>
         </div>
       </section>

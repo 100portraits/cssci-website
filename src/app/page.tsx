@@ -1,8 +1,42 @@
 import Link from 'next/link'
 import ProjectCard from '@/components/ProjectCard'
 import TestimonialCard from '@/components/TestimonialCard'
+import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/client'
+import { 
+  HOMEPAGE_QUERY, 
+  FEATURED_PROJECTS_QUERY, 
+  FEATURED_TESTIMONIALS_QUERY 
+} from '@/sanity/lib/queries'
 
-export default function Home() {
+// Fetch data with error handling
+async function getHomepageData() {
+  try {
+    const [homepage, projects, testimonials] = await Promise.all([
+      client.fetch(HOMEPAGE_QUERY),
+      client.fetch(FEATURED_PROJECTS_QUERY),
+      client.fetch(FEATURED_TESTIMONIALS_QUERY)
+    ])
+    return { homepage, projects, testimonials }
+  } catch (error) {
+    console.error('Error fetching homepage data:', error)
+    return { homepage: null, projects: [], testimonials: [] }
+  }
+}
+
+export default async function Home() {
+  const { homepage, projects, testimonials } = await getHomepageData()
+
+  // Fallback content if CMS is not configured or has no data
+  const heroTitle = homepage?.heroTitle || 'Computational Social Science'
+  const heroSubtitle = homepage?.heroSubtitle || 'University of Amsterdam (BSc)'
+  const heroDescription = homepage?.heroDescription || 'Where innovation meets impact. Join a groundbreaking program that combines social science theories with advanced computational techniques to solve real-world challenges.'
+
+  // Split title for styling (first word vs rest)
+  const titleWords = heroTitle.split(' ')
+  const firstWord = titleWords[0]
+  const restOfTitle = titleWords.slice(1).join(' ')
+
   return (
     <div className="relative">
       {/* Hero Section with gradient background */}
@@ -17,16 +51,14 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
           <div className="max-w-3xl">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-tight">
-              Computational
-              <span className="block text-secondary">Social Science</span>
+              {firstWord}
+              <span className="block text-secondary">{restOfTitle}</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-4">
-              University of Amsterdam (BSc)
+              {heroSubtitle}
             </p>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl">
-              Where innovation meets impact. Join a groundbreaking program that combines 
-              social science theories with advanced computational techniques to solve 
-              real-world challenges.
+              {heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -111,54 +143,69 @@ export default function Home() {
       </section>
 
       {/* Showcased Student Projects */}
-      <section className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Showcased Student Projects
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See how our students are making real impact through computational solutions
-            </p>
+      {(projects.length > 0 || !projects) && (
+        <section className="py-20 bg-muted/30">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Showcased Student Projects
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                See how our students are making real impact through computational solutions
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {projects.length > 0 ? (
+                projects.map((project: any) => (
+                  <ProjectCard
+                    key={project._id}
+                    title={project.title}
+                    description={project.description}
+                    image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
+                    year={project.year}
+                    tags={project.tags}
+                  />
+                ))
+              ) : (
+                // Fallback projects
+                <>
+                  <ProjectCard
+                    title="Climate Impact Analysis"
+                    description="Using machine learning to predict and visualize climate change effects on urban environments"
+                    year="Year 1"
+                    tags={["Machine Learning", "Climate", "Data Viz"]}
+                  />
+                  <ProjectCard
+                    title="Digital Inclusion Platform"
+                    description="Creating accessible technology solutions for underserved communities in Amsterdam"
+                    year="Year 2"
+                    tags={["Web Dev", "Accessibility", "Social Impact"]}
+                  />
+                  <ProjectCard
+                    title="Policy Impact Simulator"
+                    description="Developing computational models to simulate and predict policy outcomes"
+                    year="Year 3"
+                    tags={["Simulation", "Policy", "Analytics"]}
+                  />
+                </>
+              )}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link
+                href="/projects"
+                className="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold"
+              >
+                View all projects
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <ProjectCard
-              title="Climate Impact Analysis"
-              description="Using machine learning to predict and visualize climate change effects on urban environments"
-              year="Year 1"
-              tags={["Machine Learning", "Climate", "Data Viz"]}
-              link="/projects/climate-analysis"
-            />
-            <ProjectCard
-              title="Digital Inclusion Platform"
-              description="Creating accessible technology solutions for underserved communities in Amsterdam"
-              year="Year 2"
-              tags={["Web Dev", "Accessibility", "Social Impact"]}
-              link="/projects/digital-inclusion"
-            />
-            <ProjectCard
-              title="Policy Impact Simulator"
-              description="Developing computational models to simulate and predict policy outcomes"
-              year="Year 3"
-              tags={["Simulation", "Policy", "Analytics"]}
-              link="/projects/policy-simulator"
-            />
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link
-              href="/projects"
-              className="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold"
-            >
-              View all projects
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Partnerships CTA */}
       <section className="py-20 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground relative overflow-hidden">
@@ -207,38 +254,56 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              What People Say
-            </h2>
-            <p className="text-lg text-gray-600">
-              Hear from our students, partners, and faculty
-            </p>
+      {(testimonials.length > 0 || !testimonials) && (
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                What People Say
+              </h2>
+              <p className="text-lg text-gray-600">
+                Hear from our students, partners, and faculty
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {testimonials.length > 0 ? (
+                testimonials.map((testimonial: any) => (
+                  <TestimonialCard
+                    key={testimonial._id}
+                    quote={testimonial.quote}
+                    name={testimonial.name}
+                    role={testimonial.role}
+                    organization={testimonial.organization}
+                    image={testimonial.image ? urlFor(testimonial.image).width(100).height(100).url() : undefined}
+                  />
+                ))
+              ) : (
+                // Fallback testimonials
+                <>
+                  <TestimonialCard
+                    quote="CSSci has transformed how I think about solving social problems. The combination of theory and hands-on practice is incredible."
+                    name="Sarah Chen"
+                    role="Year 3 Student"
+                  />
+                  <TestimonialCard
+                    quote="Working with CSSci students brought fresh perspectives and innovative solutions to our organization's challenges."
+                    name="Dr. Marcus Weber"
+                    role="Partner"
+                    organization="Tech for Good NL"
+                  />
+                  <TestimonialCard
+                    quote="This program bridges the gap between academia and industry in a way I've never seen before. Our students are truly making an impact."
+                    name="Prof. Elena Rodriguez"
+                    role="Program Director"
+                    organization="UvA"
+                  />
+                </>
+              )}
+            </div>
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <TestimonialCard
-              quote="CSSci has transformed how I think about solving social problems. The combination of theory and hands-on practice is incredible."
-              name="Sarah Chen"
-              role="Year 3 Student"
-            />
-            <TestimonialCard
-              quote="Working with CSSci students brought fresh perspectives and innovative solutions to our organization's challenges."
-              name="Dr. Marcus Weber"
-              role="Partner"
-              organization="Tech for Good NL"
-            />
-            <TestimonialCard
-              quote="This program bridges the gap between academia and industry in a way I've never seen before. Our students are truly making an impact."
-              name="Prof. Elena Rodriguez"
-              role="Program Director"
-              organization="UvA"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   )
 }

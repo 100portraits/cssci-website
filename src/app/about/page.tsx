@@ -1,30 +1,40 @@
-'use client'
+import { client } from '@/sanity/lib/client'
+import { ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
+import { PortableText } from '@portabletext/react'
+import ContactForm from '@/components/ContactForm'
 
-import { useState } from 'react'
-import Image from 'next/image'
-
-export default function AboutPage() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: ''
-  })
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: Implement form submission
-    console.log('Form submitted:', formData)
-    alert('Thank you for your message! We will get back to you soon.')
-    setFormData({ firstName: '', lastName: '', email: '', message: '' })
+async function getAboutData() {
+  try {
+    const data = await client.fetch(ABOUT_PAGE_QUERY)
+    return data
+  } catch (error) {
+    console.error('Error fetching about page:', error)
+    return null
   }
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+export default async function AboutPage() {
+  const aboutData = await getAboutData()
+  
+  const pageTitle = aboutData?.title || 'The Essence of CSSci: Innovation Meets Impact'
+  const fallbackContent = [
+    {
+      _type: 'block',
+      children: [{
+        _type: 'span',
+        text: 'The Bachelor in Computational Social Science (CSSci) at the University of Amsterdam represents a groundbreaking approach to higher education, where traditional academic learning meets real-world problem-solving. Our programme uniquely combines social science theories, empirical research methodologies, and advanced computational techniques to create an environment where students develop practical solutions to society\'s most pressing challenges.'
+      }]
+    },
+    {
+      _type: 'block',
+      children: [{
+        _type: 'span',
+        text: 'Through our challenge-based learning model, students work directly with industry and academic partners across four distinct projects throughout their three-year journey. This innovative approach not only enriches student learning but also provides partners with fresh perspectives and data-driven solutions to complex problems.'
+      }]
+    }
+  ]
+  const content = aboutData?.content || fallbackContent
+  const sections = aboutData?.sections || []
 
   return (
     <div className="min-h-screen">
@@ -38,25 +48,20 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                The Essence of CSSci: 
-                <span className="block text-primary mt-2">Innovation Meets Impact</span>
+                {pageTitle.split(':')[0]}: 
+                <span className="block text-primary mt-2">{pageTitle.split(':')[1] || 'Innovation Meets Impact'}</span>
               </h1>
               
-              <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                The Bachelor in Computational Social Science (CSSci) at the University of Amsterdam 
-                represents a groundbreaking approach to higher education, where traditional academic 
-                learning meets real-world problem-solving. Our programme uniquely combines social 
-                science theories, empirical research methodologies, and advanced computational 
-                techniques to create an environment where students develop practical solutions 
-                to society's most pressing challenges.
-              </p>
+              <div className="prose prose-lg text-gray-600">
+                <PortableText value={content} />
+              </div>
               
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Through our challenge-based learning model, students work directly with industry 
-                and academic partners across four distinct projects throughout their three-year 
-                journey. This innovative approach not only enriches student learning but also 
-                provides partners with fresh perspectives and data-driven solutions to complex problems.
-              </p>
+              {sections.map((section: any, index: number) => (
+                <div key={index} className="mt-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{section.title}</h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">{section.content}</p>
+                </div>
+              ))}
             </div>
             
             <div className="relative">
@@ -131,80 +136,7 @@ export default function AboutPage() {
             </p>
           </div>
           
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  placeholder="Jane"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  placeholder="Smith"
-                />
-              </div>
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                placeholder="jane.smith@example.com"
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={5}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
-                placeholder="Tell us what you'd like to know..."
-              />
-            </div>
-            
-            <button
-              type="submit"
-              className="w-full px-8 py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all transform hover:scale-[1.02] font-medium text-lg"
-            >
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
     </div>

@@ -1,4 +1,34 @@
-export default function ResourcesPage() {
+import { client } from '@/sanity/lib/client'
+import { RESOURCES_QUERY } from '@/sanity/lib/queries'
+
+const fallbackResources = [
+  { title: 'Canvas LMS', description: 'Access course materials and assignments', category: 'quick-link', url: '#' },
+  { title: 'Library Access', description: 'Research papers and digital resources', category: 'quick-link', url: '#' },
+  { title: 'Student Portal', description: 'Grades, schedule, and administration', category: 'quick-link', url: '#' },
+  { title: 'Project Platform', description: 'Collaborate on partner projects', category: 'quick-link', url: '#' },
+  { title: 'Programming Guide', description: 'Introduction to Python and R for Social Science', category: 'technical', url: '#' },
+  { title: 'Data Analysis Handbook', description: 'Best practices for computational analysis', category: 'academic', url: '#' },
+  { title: 'Career Pathways', description: 'Guide to careers in computational social science', category: 'career', url: '#' },
+]
+
+async function getResourcesData() {
+  try {
+    const resources = await client.fetch(RESOURCES_QUERY)
+    return resources.length > 0 ? resources : fallbackResources
+  } catch (error) {
+    console.error('Error fetching resources:', error)
+    return fallbackResources
+  }
+}
+
+export default async function ResourcesPage() {
+  const resources = await getResourcesData()
+  
+  const quickLinks = resources.filter((r: any) => r.category === 'quick-link')
+  const academicResources = resources.filter((r: any) => r.category === 'academic')
+  const technicalResources = resources.filter((r: any) => r.category === 'technical')
+  const careerResources = resources.filter((r: any) => r.category === 'career')
+  const articleResources = resources.filter((r: any) => r.category === 'article')
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -32,22 +62,40 @@ export default function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Academic Resources</h3>
               <ul className="space-y-3 text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Course Materials & Syllabi</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Research Papers & Publications</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Study Guides & Tutorials</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Academic Calendar</span>
-                </li>
+                {academicResources.length > 0 ? (
+                  academicResources.slice(0, 4).map((resource: any) => (
+                    <li key={resource._id || resource.title} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <a 
+                        href={resource.url || '#'}
+                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {resource.title}
+                      </a>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Course Materials & Syllabi</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Research Papers & Publications</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Study Guides & Tutorials</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Academic Calendar</span>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -60,22 +108,40 @@ export default function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Technical Tools</h3>
               <ul className="space-y-3 text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Programming Resources</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Data Analysis Tools</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Software Licenses</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Computing Resources</span>
-                </li>
+                {technicalResources.length > 0 ? (
+                  technicalResources.slice(0, 4).map((resource: any) => (
+                    <li key={resource._id || resource.title} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <a 
+                        href={resource.url || '#'}
+                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {resource.title}
+                      </a>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Programming Resources</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Data Analysis Tools</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Software Licenses</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Computing Resources</span>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -88,22 +154,40 @@ export default function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Career Support</h3>
               <ul className="space-y-3 text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Internship Opportunities</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Career Counseling</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Alumni Network</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Industry Events</span>
-                </li>
+                {careerResources.length > 0 ? (
+                  careerResources.slice(0, 4).map((resource: any) => (
+                    <li key={resource._id || resource.title} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <a 
+                        href={resource.url || '#'}
+                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {resource.title}
+                      </a>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Internship Opportunities</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Career Counseling</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Alumni Network</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Industry Events</span>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
@@ -118,33 +202,20 @@ export default function ResourcesPage() {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <a href="#" className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                Canvas LMS
-              </h3>
-              <p className="text-sm text-gray-600">Access course materials and assignments</p>
-            </a>
-            
-            <a href="#" className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                Library Access
-              </h3>
-              <p className="text-sm text-gray-600">Research papers and digital resources</p>
-            </a>
-            
-            <a href="#" className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                Student Portal
-              </h3>
-              <p className="text-sm text-gray-600">Grades, schedule, and administration</p>
-            </a>
-            
-            <a href="#" className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                Project Platform
-              </h3>
-              <p className="text-sm text-gray-600">Collaborate on partner projects</p>
-            </a>
+            {quickLinks.slice(0, 4).map((resource: any) => (
+              <a 
+                key={resource._id || resource.title}
+                href={resource.url || '#'} 
+                target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group"
+              >
+                <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                  {resource.title}
+                </h3>
+                <p className="text-sm text-gray-600">{resource.description}</p>
+              </a>
+            ))}
           </div>
         </div>
       </section>

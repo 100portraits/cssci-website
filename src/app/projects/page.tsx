@@ -1,7 +1,12 @@
-import ProjectCard from '@/components/ProjectCard'
+'use client'
 
-// This will be replaced with CMS data
-const projects = [
+import { useState, useEffect, useMemo } from 'react'
+import ProjectCard from '@/components/ProjectCard'
+import { client, urlFor } from '@/sanity/lib/client'
+import { PROJECTS_QUERY } from '@/sanity/lib/queries'
+
+
+const fallbackProjects = [
   {
     title: 'Urban Heat Island Mapping',
     description: 'Using satellite data and machine learning to identify and predict heat islands in Amsterdam, helping city planners develop cooling strategies.',
@@ -46,9 +51,38 @@ const projects = [
   }
 ]
 
-const categories = ['All', 'Climate Change', 'Digital Inclusion', 'Social Innovation', 'Digital Innovation']
-
 export default function ProjectsPage() {
+  const [projects, setProjects] = useState<any[]>([])
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await client.fetch(PROJECTS_QUERY)
+        setProjects(data.length > 0 ? data : fallbackProjects)
+      } catch (error) {
+        console.error('Error fetching projects:', error)
+        setProjects(fallbackProjects)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProjects()
+  }, [])
+
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set<string>()
+    projects.forEach(project => {
+      if (project.category) uniqueCategories.add(project.category)
+    })
+    return ['All', ...Array.from(uniqueCategories)]
+  }, [projects])
+
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === 'All') return projects
+    return projects.filter(project => project.category === selectedCategory)
+  }, [projects, selectedCategory])
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -73,7 +107,12 @@ export default function ProjectsPage() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-6 py-2 bg-white rounded-full text-gray-700 hover:bg-primary hover:text-primary-foreground transition-all font-medium"
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full transition-all font-medium ${
+                  selectedCategory === category
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-white text-gray-700 hover:bg-primary hover:text-primary-foreground'
+                }`}
               >
                 {category}
               </button>
@@ -85,11 +124,22 @@ export default function ProjectsPage() {
       {/* Projects Grid */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center text-gray-600">Loading projects...</div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map((project: any) => (
+                <ProjectCard
+                  key={project._id || project.title}
+                  title={project.title}
+                  description={project.description}
+                  image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
+                  year={project.year}
+                  tags={project.tags}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

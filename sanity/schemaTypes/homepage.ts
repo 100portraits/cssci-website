@@ -6,13 +6,6 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'heroTitle',
-      title: 'Hero Title',
-      type: 'string',
-      initialValue: 'Computational Social Science',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'heroSubtitle',
       title: 'Hero Subtitle', 
       type: 'string',

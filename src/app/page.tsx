@@ -28,7 +28,6 @@ export default async function Home() {
   const { homepage, projects, testimonials } = await getHomepageData()
 
   // Fallback content if CMS is not configured or has no data
-  const heroTitle = homepage?.heroTitle || 'Computational Social Science'
   const heroSubtitle = homepage?.heroSubtitle || 'University of Amsterdam (BSc)'
   const heroDescription = homepage?.heroDescription || 'Where innovation meets impact. Join a groundbreaking program that combines social science theories with advanced computational techniques to solve real-world challenges.'
 
@@ -45,14 +44,10 @@ export default async function Home() {
         
         <div className="relative z-10  mx-auto px-12 lg:px-8 lg:py-20 lg:mt-0 mt-20">
           <div className="">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-tight">
-              {heroTitle.split(' ').map((word: string, index: number) => (
-                <span key={index}>
-                  <span className="underline underline-offset-8">{word[0]}</span>
-                  {word.slice(1)}
-                  {index < heroTitle.split(' ').length - 1 && ' '}
-                </span>
-              ))}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-2 leading-tight">
+              <span className="underline underline-offset-4 lg:underline-offset-8">C</span>omputational{' '}
+              <span className="underline underline-offset-4 lg:underline-offset-8">S</span>ocial{' '}
+              <span className="underline underline-offset-4 lg:underline-offset-8">Sci</span>ence
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-4">
               {heroSubtitle}

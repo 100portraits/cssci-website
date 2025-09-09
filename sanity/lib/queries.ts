@@ -2,7 +2,6 @@ import { groq } from 'next-sanity'
 
 // Homepage
 export const HOMEPAGE_QUERY = groq`*[_type == "homepage"][0]{
-  heroTitle,
   heroSubtitle,
   heroDescription
 }`

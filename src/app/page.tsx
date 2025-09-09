@@ -27,9 +27,8 @@ async function getHomepageData() {
 export default async function Home() {
   const { homepage, projects, testimonials } = await getHomepageData()
 
-  // Fallback content if CMS is not configured or has no data
-  const heroSubtitle = homepage?.heroSubtitle || 'University of Amsterdam (BSc)'
-  const heroDescription = homepage?.heroDescription || 'Where innovation meets impact. Join a groundbreaking program that combines social science theories with advanced computational techniques to solve real-world challenges.'
+  const heroSubtitle = homepage?.heroSubtitle
+  const heroDescription = homepage?.heroDescription
 
   return (
     <div className="relative">
@@ -138,7 +137,7 @@ export default async function Home() {
       </section>
 
       {/* Showcased Student Projects */}
-      {(projects.length > 0 || !projects) && (
+      {projects.length > 0 && (
         <section className="py-20 bg-muted/30">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -151,40 +150,16 @@ export default async function Home() {
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              {projects.length > 0 ? (
-                projects.map((project: any) => (
-                  <ProjectCard
-                    key={project._id}
-                    title={project.title}
-                    description={project.description}
-                    image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
-                    year={project.year}
-                    tags={project.tags}
-                  />
-                ))
-              ) : (
-                // Fallback projects
-                <>
-                  <ProjectCard
-                    title="Climate Impact Analysis"
-                    description="Using machine learning to predict and visualize climate change effects on urban environments"
-                    year="Year 1"
-                    tags={["Machine Learning", "Climate", "Data Viz"]}
-                  />
-                  <ProjectCard
-                    title="Digital Inclusion Platform"
-                    description="Creating accessible technology solutions for underserved communities in Amsterdam"
-                    year="Year 2"
-                    tags={["Web Dev", "Accessibility", "Social Impact"]}
-                  />
-                  <ProjectCard
-                    title="Policy Impact Simulator"
-                    description="Developing computational models to simulate and predict policy outcomes"
-                    year="Year 3"
-                    tags={["Simulation", "Policy", "Analytics"]}
-                  />
-                </>
-              )}
+              {projects.map((project: any) => (
+                <ProjectCard
+                  key={project._id}
+                  title={project.title}
+                  description={project.description}
+                  image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
+                  year={project.year}
+                  tags={project.tags}
+                />
+              ))}
             </div>
             
             <div className="text-center mt-12">
@@ -249,7 +224,7 @@ export default async function Home() {
       </section>
 
       {/* Testimonials */}
-      {(testimonials.length > 0 || !testimonials) && (
+      {testimonials.length > 0 && (
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -262,39 +237,16 @@ export default async function Home() {
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              {testimonials.length > 0 ? (
-                testimonials.map((testimonial: any) => (
-                  <TestimonialCard
-                    key={testimonial._id}
-                    quote={testimonial.quote}
-                    name={testimonial.name}
-                    role={testimonial.role}
-                    organization={testimonial.organization}
-                    image={testimonial.image ? urlFor(testimonial.image).width(100).height(100).url() : undefined}
-                  />
-                ))
-              ) : (
-                // Fallback testimonials
-                <>
-                  <TestimonialCard
-                    quote="CSSci has transformed how I think about solving social problems. The combination of theory and hands-on practice is incredible."
-                    name="Sarah Chen"
-                    role="Year 3 Student"
-                  />
-                  <TestimonialCard
-                    quote="Working with CSSci students brought fresh perspectives and innovative solutions to our organization's challenges."
-                    name="Dr. Marcus Weber"
-                    role="Partner"
-                    organization="Tech for Good NL"
-                  />
-                  <TestimonialCard
-                    quote="This program bridges the gap between academia and industry in a way I've never seen before. Our students are truly making an impact."
-                    name="Prof. Elena Rodriguez"
-                    role="Program Director"
-                    organization="UvA"
-                  />
-                </>
-              )}
+              {testimonials.map((testimonial: any) => (
+                <TestimonialCard
+                  key={testimonial._id}
+                  quote={testimonial.quote}
+                  name={testimonial.name}
+                  role={testimonial.role}
+                  organization={testimonial.organization}
+                  image={testimonial.image ? urlFor(testimonial.image).width(100).height(100).url() : undefined}
+                />
+              ))}
             </div>
           </div>
         </section>

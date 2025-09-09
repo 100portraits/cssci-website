@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
-import { PortableText } from '@portabletext/react'
+import PortableTextContent from '@/components/PortableTextContent'
 import ContactForm from '@/components/ContactForm'
 
 async function getAboutData() {
@@ -16,24 +16,8 @@ async function getAboutData() {
 export default async function AboutPage() {
   const aboutData = await getAboutData()
   
-  const pageTitle = aboutData?.title || 'The Essence of CSSci: Innovation Meets Impact'
-  const fallbackContent = [
-    {
-      _type: 'block',
-      children: [{
-        _type: 'span',
-        text: 'The Bachelor in Computational Social Science (CSSci) at the University of Amsterdam represents a groundbreaking approach to higher education, where traditional academic learning meets real-world problem-solving. Our programme uniquely combines social science theories, empirical research methodologies, and advanced computational techniques to create an environment where students develop practical solutions to society\'s most pressing challenges.'
-      }]
-    },
-    {
-      _type: 'block',
-      children: [{
-        _type: 'span',
-        text: 'Through our challenge-based learning model, students work directly with industry and academic partners across four distinct projects throughout their three-year journey. This innovative approach not only enriches student learning but also provides partners with fresh perspectives and data-driven solutions to complex problems.'
-      }]
-    }
-  ]
-  const content = aboutData?.content || fallbackContent
+  const pageTitle = aboutData?.title || 'About CSSci'
+  const content = aboutData?.content || []
   const sections = aboutData?.sections || []
 
   return (
@@ -52,9 +36,7 @@ export default async function AboutPage() {
                 <span className="block text-primary mt-2">{pageTitle.split(':')[1] || 'Innovation Meets Impact'}</span>
               </h1>
               
-              <div className="prose prose-lg text-gray-600">
-                <PortableText value={content} />
-              </div>
+              <PortableTextContent value={content} />
               
               {sections.map((section: any, index: number) => (
                 <div key={index} className="mt-6">

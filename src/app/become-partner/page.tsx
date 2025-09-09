@@ -183,28 +183,6 @@ const semesters: Semester[] = [
   }
 ]
 
-const fallbackFaqs = [
-  {
-    question: 'What is the time commitment for partners?',
-    answer: 'The total time commitment is approximately 16-18 hours spread across 18 weeks, including regular check-ins, feedback sessions, and on-campus events.'
-  },
-  {
-    question: 'What types of projects can we propose?',
-    answer: 'Projects should align with our core themes including climate change, digital inclusion, social innovation, and systemic challenges. We work with you to refine your challenge to meet both educational and organizational objectives.'
-  },
-  {
-    question: 'What deliverables can we expect?',
-    answer: 'Depending on the semester, deliverables include infographics, digital prototypes, research reports, policy recommendations, or comprehensive solutions with implementation roadmaps.'
-  },
-  {
-    question: 'How are student teams assigned to our project?',
-    answer: 'After the project kickoff and pitch, students express their preferences and are matched based on their interests, skills, and the project requirements.'
-  },
-  {
-    question: 'Can we recruit students from the program?',
-    answer: 'Yes! Partners get early access to emerging talent in computational social science. Many of our students go on to internships and careers with partner organizations.'
-  }
-]
 
 export default function BecomePartnerPage() {
   const [selectedSemester, setSelectedSemester] = useState(1)
@@ -216,10 +194,10 @@ export default function BecomePartnerPage() {
     const fetchFaqs = async () => {
       try {
         const data = await client.fetch(FAQS_QUERY)
-        setFaqs(data.length > 0 ? data : fallbackFaqs)
+        setFaqs(data || [])
       } catch (error) {
         console.error('Error fetching FAQs:', error)
-        setFaqs(fallbackFaqs)
+        setFaqs([])
       } finally {
         setLoading(false)
       }

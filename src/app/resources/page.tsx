@@ -1,23 +1,14 @@
 import { client } from '@/sanity/lib/client'
 import { RESOURCES_QUERY } from '@/sanity/lib/queries'
 
-const fallbackResources = [
-  { title: 'Canvas LMS', description: 'Access course materials and assignments', category: 'quick-link', url: '#' },
-  { title: 'Library Access', description: 'Research papers and digital resources', category: 'quick-link', url: '#' },
-  { title: 'Student Portal', description: 'Grades, schedule, and administration', category: 'quick-link', url: '#' },
-  { title: 'Project Platform', description: 'Collaborate on partner projects', category: 'quick-link', url: '#' },
-  { title: 'Programming Guide', description: 'Introduction to Python and R for Social Science', category: 'technical', url: '#' },
-  { title: 'Data Analysis Handbook', description: 'Best practices for computational analysis', category: 'academic', url: '#' },
-  { title: 'Career Pathways', description: 'Guide to careers in computational social science', category: 'career', url: '#' },
-]
 
 async function getResourcesData() {
   try {
     const resources = await client.fetch(RESOURCES_QUERY)
-    return resources.length > 0 ? resources : fallbackResources
+    return resources || []
   } catch (error) {
     console.error('Error fetching resources:', error)
-    return fallbackResources
+    return []
   }
 }
 
@@ -62,40 +53,19 @@ export default async function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Academic Resources</h3>
               <ul className="space-y-3 text-gray-600">
-                {academicResources.length > 0 ? (
-                  academicResources.slice(0, 4).map((resource: any) => (
-                    <li key={resource._id || resource.title} className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <a 
-                        href={resource.url || '#'}
-                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
-                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="hover:text-primary transition-colors"
-                      >
-                        {resource.title}
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Course Materials & Syllabi</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Research Papers & Publications</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Study Guides & Tutorials</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Academic Calendar</span>
-                    </li>
-                  </>
-                )}
+                {academicResources.slice(0, 4).map((resource: any) => (
+                  <li key={resource._id || resource.title} className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <a 
+                      href={resource.url || '#'}
+                      target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                      rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {resource.title}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -108,40 +78,19 @@ export default async function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Technical Tools</h3>
               <ul className="space-y-3 text-gray-600">
-                {technicalResources.length > 0 ? (
-                  technicalResources.slice(0, 4).map((resource: any) => (
-                    <li key={resource._id || resource.title} className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <a 
-                        href={resource.url || '#'}
-                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
-                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="hover:text-primary transition-colors"
-                      >
-                        {resource.title}
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Programming Resources</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Data Analysis Tools</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Software Licenses</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Computing Resources</span>
-                    </li>
-                  </>
-                )}
+                {technicalResources.slice(0, 4).map((resource: any) => (
+                  <li key={resource._id || resource.title} className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <a 
+                      href={resource.url || '#'}
+                      target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                      rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {resource.title}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -154,40 +103,19 @@ export default async function ResourcesPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Career Support</h3>
               <ul className="space-y-3 text-gray-600">
-                {careerResources.length > 0 ? (
-                  careerResources.slice(0, 4).map((resource: any) => (
-                    <li key={resource._id || resource.title} className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <a 
-                        href={resource.url || '#'}
-                        target={resource.url?.startsWith('http') ? '_blank' : undefined}
-                        rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="hover:text-primary transition-colors"
-                      >
-                        {resource.title}
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Internship Opportunities</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Career Counseling</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Alumni Network</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>Industry Events</span>
-                    </li>
-                  </>
-                )}
+                {careerResources.slice(0, 4).map((resource: any) => (
+                  <li key={resource._id || resource.title} className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <a 
+                      href={resource.url || '#'}
+                      target={resource.url?.startsWith('http') ? '_blank' : undefined}
+                      rel={resource.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {resource.title}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

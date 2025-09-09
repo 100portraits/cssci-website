@@ -6,50 +6,6 @@ import { client, urlFor } from '@/sanity/lib/client'
 import { PROJECTS_QUERY } from '@/sanity/lib/queries'
 
 
-const fallbackProjects = [
-  {
-    title: 'Urban Heat Island Mapping',
-    description: 'Using satellite data and machine learning to identify and predict heat islands in Amsterdam, helping city planners develop cooling strategies.',
-    year: 'Year 1',
-    tags: ['Climate', 'Machine Learning', 'Urban Planning'],
-    category: 'Climate Change'
-  },
-  {
-    title: 'Digital Literacy Portal',
-    description: 'An accessible web platform designed to help elderly citizens navigate digital government services with step-by-step guides and support.',
-    year: 'Year 2',
-    tags: ['Accessibility', 'Web Development', 'UX Design'],
-    category: 'Digital Inclusion'
-  },
-  {
-    title: 'Social Media Sentiment Analysis',
-    description: 'Analyzing public sentiment on policy changes using NLP techniques to help policymakers understand citizen concerns.',
-    year: 'Year 3',
-    tags: ['NLP', 'Policy', 'Data Analysis'],
-    category: 'Social Innovation'
-  },
-  {
-    title: 'Sustainable Transport Optimizer',
-    description: 'An algorithm that optimizes public transport routes based on real-time demand and environmental impact metrics.',
-    year: 'Capstone',
-    tags: ['Optimization', 'Sustainability', 'Transport'],
-    category: 'Climate Change'
-  },
-  {
-    title: 'Community Health Dashboard',
-    description: 'Interactive visualization tool for public health data, enabling communities to track and respond to health trends.',
-    year: 'Year 2',
-    tags: ['Data Viz', 'Public Health', 'Dashboard'],
-    category: 'Digital Innovation'
-  },
-  {
-    title: 'Fair Housing Algorithm',
-    description: 'Developing bias-free algorithms for social housing allocation, ensuring equitable distribution of resources.',
-    year: 'Year 3',
-    tags: ['Ethics', 'Algorithms', 'Social Justice'],
-    category: 'Social Innovation'
-  }
-]
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<any[]>([])
@@ -60,10 +16,10 @@ export default function ProjectsPage() {
     const fetchProjects = async () => {
       try {
         const data = await client.fetch(PROJECTS_QUERY)
-        setProjects(data.length > 0 ? data : fallbackProjects)
+        setProjects(data || [])
       } catch (error) {
         console.error('Error fetching projects:', error)
-        setProjects(fallbackProjects)
+        setProjects([])
       } finally {
         setLoading(false)
       }

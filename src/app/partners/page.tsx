@@ -2,65 +2,14 @@ import PartnerCard from '@/components/PartnerCard'
 import { client, urlFor } from '@/sanity/lib/client'
 import { PARTNERS_QUERY } from '@/sanity/lib/queries'
 
-const fallbackPartners = [
-  {
-    name: 'Amsterdam Municipality',
-    description: 'Working together on urban challenges and digital transformation initiatives for citizen services.',
-    category: 'Government',
-    website: 'https://www.amsterdam.nl'
-  },
-  {
-    name: 'Tech for Good NL',
-    description: 'Collaborating on projects that leverage technology for social impact and community development.',
-    category: 'Non-Profit',
-    website: 'https://techforgood.nl'
-  },
-  {
-    name: 'Deloitte Digital',
-    description: 'Partnering on digital innovation projects and providing mentorship for student initiatives.',
-    category: 'Consulting',
-    website: 'https://www.deloitte.com'
-  },
-  {
-    name: 'Rabobank',
-    description: 'Exploring financial inclusion and sustainable banking solutions through student research.',
-    category: 'Finance',
-    website: 'https://www.rabobank.com'
-  },
-  {
-    name: 'Philips Research',
-    description: 'Joint projects on health technology and data-driven healthcare solutions.',
-    category: 'Technology',
-    website: 'https://www.philips.com'
-  },
-  {
-    name: 'World Wildlife Fund',
-    description: 'Addressing climate change and environmental challenges through computational approaches.',
-    category: 'Environmental',
-    website: 'https://www.wwf.nl'
-  }
-]
-
-const fallbackSuccessStories = [
-  {
-    title: 'Amsterdam Smart City Initiative',
-    description: 'Students developed a predictive model for bicycle traffic flow, helping the city optimize infrastructure planning. The solution is now being piloted in three districts.',
-    icon: 'check'
-  },
-  {
-    title: 'Digital Inclusion Platform',
-    description: 'In partnership with Tech for Good NL, students created an accessible platform that has helped over 500 elderly citizens navigate digital government services.',
-    icon: 'bolt'
-  }
-]
 
 async function getPartnersData() {
   try {
     const partners = await client.fetch(PARTNERS_QUERY)
-    return partners.length > 0 ? partners : fallbackPartners
+    return partners || []
   } catch (error) {
     console.error('Error fetching partners:', error)
-    return fallbackPartners
+    return []
   }
 }
 
@@ -69,7 +18,7 @@ export default async function PartnersPage() {
   const successStories = partners
     .filter((p: any) => p.successStory)
     .map((p: any) => ({ title: p.name, description: p.successStory }))
-  const displayStories = successStories.length > 0 ? successStories : fallbackSuccessStories
+  const displayStories = successStories
   return (
     <div className="min-h-screen">
       {/* Hero Section */}

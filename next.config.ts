@@ -1,10 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Mark Sanity packages as external for server components
-  // This helps avoid Turbopack bundling issues
-  serverExternalPackages: ['sanity', '@sanity/vision'],
-  // Only transpile next-sanity for client usage
+  // Updated configuration for React 19 and Sanity Studio 4.8+
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        // Ensure single React instance
+        react: require.resolve('react'),
+        'react-dom': require.resolve('react-dom'),
+      },
+    },
+  },
+  // Remove serverExternalPackages for Sanity Studio to work properly
   transpilePackages: ['next-sanity'],
 };
 

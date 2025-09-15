@@ -43,7 +43,7 @@ export default async function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(18,66,64,0.05),transparent_70%)]"></div>
         </div>
         
-        <div className="relative z-10  mx-auto px-12 lg:px-8 lg:py-20 lg:mt-0 mt-20">
+        <div className="relative z-10 px-8 mx-auto  lg:px-8 lg:py-20 lg:mt-0 mt-20">
           <div className="">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-2 leading-tight">
               <span className="underline underline-offset-4 lg:underline-offset-8">C</span>omputational{' '}

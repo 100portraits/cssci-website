@@ -1,7 +1,8 @@
+import Link from 'next/link'
+import Image from 'next/image'
 import { client } from '@/sanity/lib/client'
 import { ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
 import PortableTextContent from '@/components/PortableTextContent'
-import ContactForm from '@/components/ContactForm'
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
@@ -51,10 +52,18 @@ export default async function AboutPage() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl transform rotate-3"></div>
               <div className="relative bg-white rounded-3xl shadow-xl overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-muted to-white flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="text-6xl font-bold text-primary mb-4"><span className="underline underline-offset-4">CSS</span>ci</div>
-                    <p className="text-gray-600">Shaping Tomorrow's Problem Solvers</p>
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src="/DSC_1001.jpg"
+                    alt="CSSci students collaborating"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end justify-center">
+                    <div className="text-center p-8">
+                      <div className="text-4xl md:text-6xl font-bold text-white mb-4"><span className="underline underline-offset-4">CSS</span>ci</div>
+                      <p className="text-white/90">Shaping Tomorrow's Problem Solvers</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -86,7 +95,7 @@ export default async function AboutPage() {
             <div className="text-center">
               <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 009.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Partnership-Based</h3>
@@ -110,17 +119,70 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 bg-gradient-to-br from-muted/30 to-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h2>
+      {/* Getting Involved */}
+      <section className="py-20 bg-muted/20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Getting Involved: A Simple Process
+            </h2>
             <p className="text-lg text-gray-600">
-              Have questions about the program? We'd love to hear from you.
+              Becoming a <span className="underline underline-offset-4">CSS</span>ci partner is a straightforward process designed to create meaningful
+              collaboration while respecting partners' time constraints. The total time commitment
+              is manageable, requiring only 16-18 hours spread across 18 weeks.
             </p>
           </div>
-          
-          <ContactForm />
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary">1</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Submit Challenge</h3>
+              <p className="text-sm text-gray-600">Propose a challenge aligned with our core themes</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-secondary">2</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Refine Together</h3>
+              <p className="text-sm text-gray-600">Work with our team to shape the project</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-secondary">3</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Meet Students</h3>
+              <p className="text-sm text-gray-600">Kickoff event and team matching</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary">4</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Receive Solutions</h3>
+              <p className="text-sm text-gray-600">Get innovative solutions and insights</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-gradient-to-br from-muted/30 to-white mt-10">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
+            <p className="text-lg text-gray-600 mb-6">
+              We're always excited to connect with organizations and collaborators.
+            </p>
+            <Link
+              href="/become-partner"
+              className="inline-flex items-center justify-center text-primary font-semibold text-xl hover:text-secondary transition-colors"
+            >
+              Want to get in touch or become a partner?
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

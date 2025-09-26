@@ -21,7 +21,6 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Program</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li><Link href="/about" className="hover:text-white transition-colors">About <span className="underline underline-offset-4">CSS</span>ci</Link></li>
-              <li><Link href="/resources" className="hover:text-white transition-colors">Student Resources</Link></li>
             </ul>
           </div>
 

@@ -21,14 +21,14 @@ export default function Navigation() {
             <Link href="/about" className="text-gray-700 hover:text-primary transition-colors font-medium">
               About
             </Link>
+            <Link href="/impact" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Impact
+            </Link>
             <Link href="/partners" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Partners
             </Link>
             <Link href="/projects" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Projects
-            </Link>
-            <Link href="/resources" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Resources
             </Link>
             <Link 
               href="/become-partner" 
@@ -60,14 +60,14 @@ export default function Navigation() {
               <Link href="/about" className="text-gray-700 hover:text-primary transition-colors font-medium">
                 About
               </Link>
+              <Link href="/impact" className="text-gray-700 hover:text-primary transition-colors font-medium">
+                Impact
+              </Link>
               <Link href="/partners" className="text-gray-700 hover:text-primary transition-colors font-medium">
                 Partners
               </Link>
               <Link href="/projects" className="text-gray-700 hover:text-primary transition-colors font-medium">
                 Projects
-              </Link>
-              <Link href="/resources" className="text-gray-700 hover:text-primary transition-colors font-medium">
-                Resources
               </Link>
               <Link 
                 href="/become-partner" 

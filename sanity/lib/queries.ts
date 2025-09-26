@@ -3,7 +3,12 @@ import { groq } from 'next-sanity'
 // Homepage
 export const HOMEPAGE_QUERY = groq`*[_type == "homepage"][0]{
   heroSubtitle,
-  heroDescription
+  heroDescription,
+  carouselImages[]{
+    image,
+    alt,
+    caption
+  }
 }`
 
 // Featured projects for homepage
@@ -14,7 +19,8 @@ export const FEATURED_PROJECTS_QUERY = groq`*[_type == "project" && featured == 
   image,
   year,
   category,
-  tags
+  tags,
+  externalLink
 }`
 
 // Featured testimonials for homepage
@@ -34,6 +40,14 @@ export const ABOUT_PAGE_QUERY = groq`*[_type == "aboutPage"][0]{
   sections
 }`
 
+// Impact page
+export const IMPACT_PAGE_QUERY = groq`*[_type == "impactPage"][0]{
+  title,
+  content,
+  impactCards,
+  ctaText
+}`
+
 // All projects
 export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _createdAt desc){
   _id,
@@ -42,7 +56,8 @@ export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _cre
   image,
   year,
   category,
-  tags
+  tags,
+  externalLink
 }`
 
 // All partners
@@ -56,15 +71,6 @@ export const PARTNERS_QUERY = groq`*[_type == "partner"] | order(order asc, name
   successStory
 }`
 
-// All resources
-export const RESOURCES_QUERY = groq`*[_type == "resource"] | order(order asc, _createdAt desc){
-  _id,
-  title,
-  description,
-  category,
-  url,
-  file
-}`
 
 // All FAQs
 export const FAQS_QUERY = groq`*[_type == "faq"] | order(order asc, _createdAt desc){

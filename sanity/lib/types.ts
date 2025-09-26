@@ -11,6 +11,7 @@ export interface Project {
   semester?: number
   category?: string
   tags?: string[]
+  externalLink?: string
   partner?: Partner
   students?: Array<{ name: string; role: string }>
   outcomes?: string[]
@@ -85,17 +86,18 @@ export interface FAQ {
   order?: number
 }
 
-export interface Resource {
-  _id: string
+export interface ImpactPage {
   title: string
-  description?: string
-  category: string
-  type?: string
-  url?: string
-  file?: any
-  icon?: string
-  order?: number
+  content: any[]
+  impactCards: Array<{
+    title: string
+    description: string
+    icon: string
+    color: 'primary' | 'secondary' | 'accent'
+  }>
+  ctaText: string
 }
+
 
 export interface TeamMember {
   _id: string

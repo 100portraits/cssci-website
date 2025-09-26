@@ -92,6 +92,7 @@ export default function ProjectsPage() {
                   image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
                   year={project.year}
                   tags={project.tags}
+                  link={project.externalLink}
                 />
               ))}
             </div>
@@ -99,33 +100,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Impact Stats */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/90 text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Our Impact in Numbers
-          </h2>
-          
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-5xl font-bold mb-2">150+</div>
-              <div className="text-white/80">Projects Completed</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">50+</div>
-              <div className="text-white/80">Partner Organizations</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">500+</div>
-              <div className="text-white/80">Students Engaged</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">30+</div>
-              <div className="text-white/80">Solutions Implemented</div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

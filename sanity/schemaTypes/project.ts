@@ -69,6 +69,12 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'externalLink',
+      title: 'External Link',
+      type: 'url',
+      description: 'Optional external link to project demo, repository, or related content',
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',

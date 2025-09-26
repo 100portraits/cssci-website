@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 import { FAQS_QUERY } from '@/sanity/lib/queries'
+import ContactForm from '@/components/ContactForm'
 
 interface TimelinePhase {
   title: string
@@ -438,25 +439,19 @@ export default function BecomePartnerPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/90 text-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Make an Impact?</h2>
-          <p className="text-xl text-white/90 mb-8">
-            Join us in shaping the next generation of computational social scientists 
-            while addressing your organization's challenges.
+      {/* Partner Contact */}
+      <section className="py-20 bg-muted/40">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
+          <p className="text-lg text-gray-600 mb-6">
+            We're excited to learn more about your organization and explore potential collaborations.
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-full hover:bg-accent hover:text-accent-foreground transition-all transform hover:scale-105 font-medium text-lg"
-          >
-            Get Started Today
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+        </div>
+        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+          <ContactForm />
         </div>
       </section>
+
     </div>
   )
 }

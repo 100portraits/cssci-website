@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import ProjectCard from '@/components/ProjectCard'
 import TestimonialCard from '@/components/TestimonialCard'
+import ImageCarousel from '@/components/ImageCarousel'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/client'
-import { 
-  HOMEPAGE_QUERY, 
-  FEATURED_PROJECTS_QUERY, 
-  FEATURED_TESTIMONIALS_QUERY 
+import {
+  HOMEPAGE_QUERY,
+  FEATURED_PROJECTS_QUERY,
+  FEATURED_TESTIMONIALS_QUERY
 } from '@/sanity/lib/queries'
 
 export const revalidate = 60 // Revalidate every 60 seconds
@@ -31,6 +32,11 @@ export default async function Home() {
 
   const heroSubtitle = homepage?.heroSubtitle
   const heroDescription = homepage?.heroDescription
+  const carouselImages = homepage?.carouselImages?.map((item: any) => ({
+    image: item.image ? urlFor(item.image).width(1200).height(600).url() : '',
+    alt: item.alt,
+    caption: item.caption
+  })) || []
 
   return (
     <div className="relative">
@@ -73,6 +79,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Image Carousel */}
+      <ImageCarousel images={carouselImages} />
 
       {/* What makes CSSci different */}
       <section className="py-20 bg-white">
@@ -160,6 +169,7 @@ export default async function Home() {
                   image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
                   year={project.year}
                   tags={project.tags}
+                  link={project.externalLink}
                 />
               ))}
             </div>

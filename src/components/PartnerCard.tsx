@@ -14,14 +14,14 @@ export default function PartnerCard({ name, description, logo, website, category
     <div className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
       <div className="flex flex-col h-full">
         {/* Logo or placeholder */}
-        <div className="h-20 mb-4 flex items-center">
+        <div className="h-36 mb-4 flex items-center">
           {logo ? (
             <div className="relative w-full h-full">
               <Image
                 src={logo}
                 alt={`${name} logo`}
                 fill
-                className="object-contain"
+                className="object-scale-down"
               />
             </div>
           ) : (

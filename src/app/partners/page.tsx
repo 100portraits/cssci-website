@@ -51,7 +51,7 @@ export default async function PartnersPage() {
                 key={partner._id || partner.name}
                 name={partner.name}
                 description={partner.description}
-                logo={partner.logo ? urlFor(partner.logo).width(200).height(100).url() : undefined}
+                logo={partner.logo ? urlFor(partner.logo).url() : undefined}
                 category={partner.category}
                 website={partner.website}
               />

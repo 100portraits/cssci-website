@@ -9,6 +9,7 @@ interface ProjectCardProps {
   tags?: string[]
   link?: string
   slug?: string
+  hasDetailPage?: boolean
   connectedPartner?: {
     name: string
     category?: string
@@ -17,7 +18,7 @@ interface ProjectCardProps {
 
 
 
-export default function ProjectCard({ title, description, image, year, tags = [], link, slug, connectedPartner }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, year, tags = [], link, slug, hasDetailPage, connectedPartner }: ProjectCardProps) {
   console.log('ProjectCard component loaded', connectedPartner);
   
   const content = (
@@ -78,8 +79,8 @@ export default function ProjectCard({ title, description, image, year, tags = []
           </div>
         )}
 
-        {/* View project button - only show if slug exists and has content */}
-        {slug && (
+        {/* View project button - only show if detail page is enabled and slug exists */}
+        {hasDetailPage && slug && (
           <div className="flex justify-start mt-auto pt-4">
             <div className="inline-flex items-center gap-2 text-primary font-medium text-sm">
               View project details
@@ -93,7 +94,7 @@ export default function ProjectCard({ title, description, image, year, tags = []
     </>
   )
 
-  if (slug) {
+  if (hasDetailPage && slug) {
     return (
       <Link
         href={`/projects/${slug}`}

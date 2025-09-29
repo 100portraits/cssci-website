@@ -12,6 +12,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'hasDetailPage',
+      title: 'Create Project Detail Page?',
+      type: 'boolean',
+      description: 'Enable this to create a detailed project page with additional content',
+      initialValue: false,
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -19,7 +26,14 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => !document?.hasDetailPage,
+      validation: (Rule) =>
+        Rule.custom((slug, { document }) => {
+          if (document?.hasDetailPage && !slug?.current) {
+            return 'Slug is required when detail page is enabled'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'previewDescription',
@@ -34,6 +48,8 @@ export default defineType({
       title: 'Subtitle',
       type: 'string',
       description: 'Subtitle for the detailed project page',
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'studentNames',
@@ -41,12 +57,16 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
       description: 'Names of students who worked on this project',
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'semester',
       title: 'Semester',
       type: 'string',
       description: 'e.g. Fall 2023, Spring 2024',
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'image',
@@ -119,6 +139,8 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'detailParagraph1',
@@ -155,6 +177,8 @@ export default defineType({
         },
       ],
       description: 'First detailed paragraph with rich text formatting',
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'detailImage2',
@@ -164,6 +188,8 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'detailParagraph2',
@@ -200,6 +226,8 @@ export default defineType({
         },
       ],
       description: 'Second detailed paragraph with rich text formatting',
+      hidden: ({ document }) => !document?.hasDetailPage,
+      readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
       name: 'order',

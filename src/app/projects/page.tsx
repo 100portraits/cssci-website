@@ -93,6 +93,7 @@ export default function ProjectsPage() {
                   year={project.year}
                   tags={project.tags}
                   slug={project.slug?.current}
+                  hasDetailPage={project.hasDetailPage}
                   connectedPartner={project.connectedPartner}
                 />
               ))}

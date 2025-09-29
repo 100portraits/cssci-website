@@ -43,6 +43,22 @@ export default function ProjectCard({ title, description, image, year, tags = []
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
           {title}
         </h3>
+
+        {/* Connected Partner */}
+        {connectedPartner && (
+          <div className="mb-3">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <span className="font-medium">Partner:</span>
+              <span className="text-primary font-medium">{connectedPartner.name}</span>
+              {connectedPartner.category && (
+                <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                  {connectedPartner.category}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
         <p className="text-gray-600 text-sm leading-relaxed mb-4 whitespace-pre-line">
           {description}
         </p>
@@ -58,21 +74,6 @@ export default function ProjectCard({ title, description, image, year, tags = []
                 {tag}
               </span>
             ))}
-          </div>
-        )}
-
-        {/* Connected Partner */}
-        {connectedPartner && (
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="font-medium">Partner:</span>
-              <span className="text-primary font-medium">{connectedPartner.name}</span>
-              {connectedPartner.category && (
-                <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                  {connectedPartner.category}
-                </span>
-              )}
-            </div>
           </div>
         )}
 

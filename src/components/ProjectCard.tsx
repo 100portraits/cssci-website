@@ -43,7 +43,7 @@ export default function ProjectCard({ title, description, image, year, tags = []
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
           {title}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4">
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 whitespace-pre-line">
           {description}
         </p>
 

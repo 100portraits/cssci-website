@@ -20,7 +20,11 @@ export const FEATURED_PROJECTS_QUERY = groq`*[_type == "project" && featured == 
   year,
   category,
   tags,
-  externalLink
+  externalLink,
+  connectedPartner->{
+    name,
+    category
+  }
 }`
 
 // Featured testimonials for homepage
@@ -57,7 +61,11 @@ export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _cre
   year,
   category,
   tags,
-  externalLink
+  externalLink,
+  connectedPartner->{
+    name,
+    category
+  }
 }`
 
 // All partners

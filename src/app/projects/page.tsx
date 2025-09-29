@@ -93,6 +93,7 @@ export default function ProjectsPage() {
                   year={project.year}
                   tags={project.tags}
                   link={project.externalLink}
+                  connectedPartner={project.connectedPartner}
                 />
               ))}
             </div>

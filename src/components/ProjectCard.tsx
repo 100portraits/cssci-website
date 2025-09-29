@@ -14,7 +14,11 @@ interface ProjectCardProps {
   }
 }
 
+
+
 export default function ProjectCard({ title, description, image, year, tags = [], link, connectedPartner }: ProjectCardProps) {
+  console.log('ProjectCard component loaded', connectedPartner);
+  
   const content = (
     <>
       {/* Image */}
@@ -35,7 +39,7 @@ export default function ProjectCard({ title, description, image, year, tags = []
       )}
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 flex flex-col h-full">
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
           {title}
         </h3>
@@ -74,22 +78,24 @@ export default function ProjectCard({ title, description, image, year, tags = []
 
         {/* Project link */}
         {link && (
-          <Link
-            href={link}
-            className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-medium mt-4"
-          >
-            see the project
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+          <div className="flex justify-start mt-auto pt-4">
+            <Link
+              href={link}
+              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors px-4 py-2 rounded-lg font-medium"
+            >
+              See the project
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
         )}
       </div>
     </>
   )
 
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col">
       {content}
     </div>
   )

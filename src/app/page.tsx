@@ -170,6 +170,7 @@ export default async function Home() {
                   year={project.year}
                   tags={project.tags}
                   link={project.externalLink}
+                  connectedPartner={project.connectedPartner}
                 />
               ))}
             </div>

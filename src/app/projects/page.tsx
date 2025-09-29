@@ -88,11 +88,11 @@ export default function ProjectsPage() {
                 <ProjectCard
                   key={project._id || project.title}
                   title={project.title}
-                  description={project.description}
+                  description={project.previewDescription}
                   image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
                   year={project.year}
                   tags={project.tags}
-                  link={project.externalLink}
+                  slug={project.slug?.current}
                   connectedPartner={project.connectedPartner}
                 />
               ))}

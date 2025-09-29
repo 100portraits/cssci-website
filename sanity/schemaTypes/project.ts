@@ -12,11 +12,41 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'previewDescription',
+      title: 'Preview Description',
       type: 'text',
       rows: 3,
+      description: 'Short description shown in project cards and listings',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string',
+      description: 'Subtitle for the detailed project page',
+    }),
+    defineField({
+      name: 'studentNames',
+      title: 'Student Names',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Names of students who worked on this project',
+    }),
+    defineField({
+      name: 'semester',
+      title: 'Semester',
+      type: 'string',
+      description: 'e.g. Fall 2023, Spring 2024',
     }),
     defineField({
       name: 'image',
@@ -80,6 +110,96 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'partner' }],
       description: 'Optional partner organization associated with this project',
+    }),
+    defineField({
+      name: 'detailImage1',
+      title: 'Detail Image 1',
+      type: 'image',
+      description: 'First image for the detailed project page',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'detailParagraph1',
+      title: 'Detail Paragraph 1',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H3', value: 'h3' },
+            { title: 'H4', value: 'h4' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Bold', value: 'strong' },
+              { title: 'Italic', value: 'em' },
+            ],
+            annotations: [
+              {
+                title: 'URL',
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    title: 'URL',
+                    name: 'href',
+                    type: 'url',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      description: 'First detailed paragraph with rich text formatting',
+    }),
+    defineField({
+      name: 'detailImage2',
+      title: 'Detail Image 2',
+      type: 'image',
+      description: 'Second image for the detailed project page',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'detailParagraph2',
+      title: 'Detail Paragraph 2',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H3', value: 'h3' },
+            { title: 'H4', value: 'h4' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Bold', value: 'strong' },
+              { title: 'Italic', value: 'em' },
+            ],
+            annotations: [
+              {
+                title: 'URL',
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    title: 'URL',
+                    name: 'href',
+                    type: 'url',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      description: 'Second detailed paragraph with rich text formatting',
     }),
     defineField({
       name: 'order',

@@ -15,7 +15,8 @@ export const HOMEPAGE_QUERY = groq`*[_type == "homepage"][0]{
 export const FEATURED_PROJECTS_QUERY = groq`*[_type == "project" && featured == true] | order(order asc, _createdAt desc) [0...3]{
   _id,
   title,
-  description,
+  previewDescription,
+  slug,
   image,
   year,
   category,
@@ -56,7 +57,8 @@ export const IMPACT_PAGE_QUERY = groq`*[_type == "impactPage"][0]{
 export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _createdAt desc){
   _id,
   title,
-  description,
+  previewDescription,
+  slug,
   image,
   year,
   category,

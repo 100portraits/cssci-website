@@ -8,6 +8,7 @@ interface ProjectCardProps {
   year?: string
   tags?: string[]
   link?: string
+  slug?: string
   connectedPartner?: {
     name: string
     category?: string
@@ -16,7 +17,7 @@ interface ProjectCardProps {
 
 
 
-export default function ProjectCard({ title, description, image, year, tags = [], link, connectedPartner }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, year, tags = [], link, slug, connectedPartner }: ProjectCardProps) {
   console.log('ProjectCard component loaded', connectedPartner);
   
   const content = (
@@ -77,25 +78,31 @@ export default function ProjectCard({ title, description, image, year, tags = []
           </div>
         )}
 
-        {/* Project link */}
-        {link && (
+        {/* View project button - only show if slug exists and has content */}
+        {slug && (
           <div className="flex justify-start mt-auto pt-4">
-            <Link
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors px-4 py-2 rounded-lg font-medium"
-            >
-              See the project
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="inline-flex items-center gap-2 text-primary font-medium text-sm">
+              View project details
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </Link>
+            </div>
           </div>
         )}
       </div>
     </>
   )
+
+  if (slug) {
+    return (
+      <Link
+        href={`/projects/${slug}`}
+        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col block"
+      >
+        {content}
+      </Link>
+    )
+  }
 
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col">

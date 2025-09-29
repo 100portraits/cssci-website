@@ -81,6 +81,8 @@ export default function ProjectCard({ title, description, image, year, tags = []
           <div className="flex justify-start mt-auto pt-4">
             <Link
               href={link}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors px-4 py-2 rounded-lg font-medium"
             >
               See the project

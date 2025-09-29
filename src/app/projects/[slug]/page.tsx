@@ -40,13 +40,14 @@ export async function generateStaticParams() {
 }
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await client.fetch(PROJECT_DETAIL_QUERY, { slug: params.slug })
+  const { slug } = await params
+  const project = await client.fetch(PROJECT_DETAIL_QUERY, { slug })
 
   if (!project) {
     notFound()

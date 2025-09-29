@@ -8,9 +8,13 @@ interface ProjectCardProps {
   year?: string
   tags?: string[]
   link?: string
+  connectedPartner?: {
+    name: string
+    category?: string
+  }
 }
 
-export default function ProjectCard({ title, description, image, year, tags = [], link }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, year, tags = [], link, connectedPartner }: ProjectCardProps) {
   const content = (
     <>
       {/* Image */}
@@ -53,28 +57,36 @@ export default function ProjectCard({ title, description, image, year, tags = []
           </div>
         )}
 
-        {/* Arrow indicator for links */}
+        {/* Connected Partner */}
+        {connectedPartner && (
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <span className="font-medium">Partner:</span>
+              <span className="text-primary font-medium">{connectedPartner.name}</span>
+              {connectedPartner.category && (
+                <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                  {connectedPartner.category}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Project link */}
         {link && (
-          <div className="absolute bottom-6 right-6 w-8 h-8 bg-primary rounded-full flex items-center justify-center group-hover:bg-secondary transition-colors">
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link
+            href={link}
+            className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-medium mt-4"
+          >
+            see the project
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </div>
+          </Link>
         )}
       </div>
     </>
   )
-
-  if (link) {
-    return (
-      <Link 
-        href={link}
-        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 block"
-      >
-        {content}
-      </Link>
-    )
-  }
 
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">

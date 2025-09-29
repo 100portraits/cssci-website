@@ -75,6 +75,13 @@ export default defineType({
       description: 'Optional external link to project demo, repository, or related content',
     }),
     defineField({
+      name: 'connectedPartner',
+      title: 'Connected Partner',
+      type: 'reference',
+      to: [{ type: 'partner' }],
+      description: 'Optional partner organization associated with this project',
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',

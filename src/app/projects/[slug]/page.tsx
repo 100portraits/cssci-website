@@ -198,12 +198,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {/* Main Project Image */}
           {project.image && (
-            <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-12 shadow-lg">
+            <div className="relative w-full rounded-2xl overflow-hidden mb-12 shadow-lg">
               <Image
-                src={urlFor(project.image).width(1200).height(600).url()}
+                src={urlFor(project.image).width(1200).url()}
                 alt={project.title}
-                fill
-                className="object-cover"
+                width={1200}
+                height={800}
+                className="w-full h-auto"
               />
             </div>
           )}
@@ -215,12 +216,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="max-w-3xl mx-auto px-6">
           {/* First Image */}
           {project.detailImage1 && (
-            <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden mb-8 shadow-md">
+            <div className="relative w-full rounded-xl overflow-hidden mb-8 shadow-md">
               <Image
-                src={urlFor(project.detailImage1).width(800).height(500).url()}
+                src={urlFor(project.detailImage1).width(1000).url()}
                 alt="Project detail image 1"
-                fill
-                className="object-cover"
+                width={1000}
+                height={800}
+                className="w-full h-auto"
               />
             </div>
           )}
@@ -237,12 +239,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {/* Second Image */}
           {project.detailImage2 && (
-            <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden mb-8 shadow-md">
+            <div className="relative w-full rounded-xl overflow-hidden mb-8 shadow-md">
               <Image
-                src={urlFor(project.detailImage2).width(800).height(500).url()}
+                src={urlFor(project.detailImage2).width(1000).url()}
                 alt="Project detail image 2"
-                fill
-                className="object-cover"
+                width={1000}
+                height={800}
+                className="w-full h-auto"
               />
             </div>
           )}

@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface ProjectCardProps {
   title: string
@@ -22,8 +25,14 @@ interface ProjectCardProps {
 
 
 export default function ProjectCard({ title, description, image, year, tags = [], link, slug, hasDetailPage, connectedPartner }: ProjectCardProps) {
-  console.log('ProjectCard component loaded', connectedPartner);
-  
+  const router = useRouter()
+
+  const handlePartnerClick = (e: React.MouseEvent, partnerSlug: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    router.push(`/partners/${partnerSlug}`)
+  }
+
   const content = (
     <>
       {/* Image */}
@@ -55,13 +64,12 @@ export default function ProjectCard({ title, description, image, year, tags = []
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <span className="font-medium">Partner:</span>
               {connectedPartner.slug?.current ? (
-                <Link
-                  href={`/partners/${connectedPartner.slug.current}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-primary font-medium hover:text-secondary underline"
+                <button
+                  onClick={(e) => handlePartnerClick(e, connectedPartner.slug!.current)}
+                  className="text-primary font-medium hover:text-secondary underline cursor-pointer text-left"
                 >
                   {connectedPartner.name}
-                </Link>
+                </button>
               ) : (
                 <span className="text-primary font-medium">{connectedPartner.name}</span>
               )}

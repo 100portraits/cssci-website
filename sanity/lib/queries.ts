@@ -26,7 +26,8 @@ export const FEATURED_PROJECTS_QUERY = groq`*[_type == "project" && featured == 
   order,
   connectedPartner->{
     name,
-    category
+    category,
+    slug
   }
 }`
 
@@ -70,7 +71,8 @@ export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _cre
   order,
   connectedPartner->{
     name,
-    category
+    category,
+    slug
   }
 }`
 
@@ -78,11 +80,11 @@ export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _cre
 export const PARTNERS_QUERY = groq`*[_type == "partner"] | order(order asc, name asc){
   _id,
   name,
+  slug,
   description,
   logo,
   website,
-  category,
-  successStory
+  category
 }`
 
 

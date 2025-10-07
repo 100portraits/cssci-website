@@ -7,11 +7,12 @@ interface PartnerCardProps {
   logo?: string
   website?: string
   category?: string
+  slug?: string
 }
 
-export default function PartnerCard({ name, description, logo, website, category }: PartnerCardProps) {
-  return (
-    <div className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+export default function PartnerCard({ name, description, logo, website, category, slug }: PartnerCardProps) {
+  const content = (
+    <div className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
       <div className="flex flex-col h-full">
         {/* Logo or placeholder */}
         <div className="h-36 mb-4 flex items-center">
@@ -52,23 +53,28 @@ export default function PartnerCard({ name, description, logo, website, category
           </p>
         </div>
 
-        {/* Website link */}
-        {website && (
+        {/* View partner link */}
+        {slug && (
           <div className="mt-4 pt-4 border-t border-gray-100">
-            <Link
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-sm text-primary hover:text-secondary transition-colors font-medium"
-            >
-              Visit website
+            <div className="inline-flex items-center text-sm text-primary hover:text-secondary transition-colors font-medium">
+              View partner details
               <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </Link>
+            </div>
           </div>
         )}
       </div>
     </div>
   )
+
+  if (slug) {
+    return (
+      <Link href={`/partners/${slug}`} className="block h-full">
+        {content}
+      </Link>
+    )
+  }
+
+  return content
 }

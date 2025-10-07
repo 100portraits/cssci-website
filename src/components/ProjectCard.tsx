@@ -13,6 +13,9 @@ interface ProjectCardProps {
   connectedPartner?: {
     name: string
     category?: string
+    slug?: {
+      current: string
+    }
   }
 }
 
@@ -51,7 +54,17 @@ export default function ProjectCard({ title, description, image, year, tags = []
           <div className="mb-3">
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <span className="font-medium">Partner:</span>
-              <span className="text-primary font-medium">{connectedPartner.name}</span>
+              {connectedPartner.slug?.current ? (
+                <Link
+                  href={`/partners/${connectedPartner.slug.current}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-primary font-medium hover:text-secondary underline"
+                >
+                  {connectedPartner.name}
+                </Link>
+              ) : (
+                <span className="text-primary font-medium">{connectedPartner.name}</span>
+              )}
               {connectedPartner.category && (
                 <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                   {connectedPartner.category}

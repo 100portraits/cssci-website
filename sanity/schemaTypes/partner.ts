@@ -12,11 +12,57 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'description',
-      title: 'Description',
+      title: 'Short Description',
       type: 'text',
       rows: 3,
+      description: 'Brief description shown in partner listings',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'partnershipDescription',
+      title: 'Partnership Description',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H3', value: 'h3' },
+          ],
+          marks: {
+            decorators: [
+              { title: 'Bold', value: 'strong' },
+              { title: 'Italic', value: 'em' },
+            ],
+            annotations: [
+              {
+                title: 'URL',
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    title: 'URL',
+                    name: 'href',
+                    type: 'url',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      description: 'Detailed description of what the partner does and how you collaborate with them',
     }),
     defineField({
       name: 'logo',
@@ -46,15 +92,6 @@ export default defineType({
           { title: 'Education', value: 'Education' },
         ],
       },
-    }),
-    defineField({
-      name: 'successStory',
-      title: 'Success Story (optional)',
-      type: 'object',
-      fields: [
-        { name: 'title', title: 'Story Title', type: 'string' },
-        { name: 'description', title: 'Story Description', type: 'text', rows: 4 },
-      ],
     }),
     defineField({
       name: 'order',

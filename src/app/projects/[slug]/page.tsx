@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation'
 import { client, urlFor } from '@/sanity/lib/client'
 import { PortableText } from '@portabletext/react'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
+
 // Query to get a single project by slug
 const PROJECT_DETAIL_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   _id,
@@ -21,7 +24,8 @@ const PROJECT_DETAIL_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   connectedPartner->{
     name,
     category,
-    website
+    website,
+    slug
   },
   detailImage1,
   detailParagraph1,
@@ -141,15 +145,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {project.connectedPartner && (
               <div className="inline-flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg mb-8">
                 <span className="font-medium text-gray-700">Partner:</span>
-                {project.connectedPartner.website ? (
-                  <a
-                    href={project.connectedPartner.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {project.connectedPartner.slug?.current ? (
+                  <Link
+                    href={`/partners/${project.connectedPartner.slug.current}`}
                     className="text-primary hover:text-secondary font-medium underline"
                   >
                     {project.connectedPartner.name}
-                  </a>
+                  </Link>
                 ) : (
                   <span className="text-primary font-medium">{project.connectedPartner.name}</span>
                 )}

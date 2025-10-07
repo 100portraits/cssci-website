@@ -17,10 +17,7 @@ async function getPartnersData() {
 
 export default async function PartnersPage() {
   const partners = await getPartnersData()
-  const successStories = partners
-    .filter((p: any) => p.successStory)
-    .map((p: any) => ({ title: p.name, description: p.successStory }))
-  const displayStories = successStories
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -45,48 +42,18 @@ export default async function PartnersPage() {
       {/* Partners Grid */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
             {partners.map((partner: any) => (
-              <PartnerCard 
+              <PartnerCard
                 key={partner._id || partner.name}
                 name={partner.name}
                 description={partner.description}
                 logo={partner.logo ? urlFor(partner.logo).url() : undefined}
                 category={partner.category}
                 website={partner.website}
+                slug={partner.slug?.current}
               />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Success Stories */}
-      <section className="py-20 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-            Success Stories
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {displayStories.slice(0, 2).map((story: any, index: number) => (
-              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className={`w-12 h-12 ${index === 0 ? 'bg-primary/10' : 'bg-secondary/10'} rounded-full flex items-center justify-center mr-4`}>
-                    <svg className={`w-6 h-6 ${index === 0 ? 'text-primary' : 'text-secondary'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      {story.icon === 'check' || index === 0 ? (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      ) : (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      )}
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900">{story.title}</h3>
-                </div>
-                <p className="text-gray-600">
-                  {story.description}
-                </p>
-              </div>
-            )) }
           </div>
         </div>
       </section>

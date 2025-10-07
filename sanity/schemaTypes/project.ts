@@ -61,14 +61,6 @@ export default defineType({
       readOnly: ({ document }) => !document?.hasDetailPage,
     }),
     defineField({
-      name: 'semester',
-      title: 'Semester',
-      type: 'string',
-      description: 'e.g. Fall 2023, Spring 2024',
-      hidden: ({ document }) => !document?.hasDetailPage,
-      readOnly: ({ document }) => !document?.hasDetailPage,
-    }),
-    defineField({
       name: 'image',
       title: 'Project Image',
       type: 'image',
@@ -77,30 +69,18 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'year',
-      title: 'Year',
+      name: 'semester',
+      title: 'Semester',
       type: 'string',
       options: {
         list: [
-          { title: 'Year 1', value: 'Year 1' },
-          { title: 'Year 2', value: 'Year 2' },
-          { title: 'Year 3', value: 'Year 3' },
+          { title: 'Semester 1 - Infographic', value: 'Semester 1 - Infographic' },
+          { title: 'Semester 2 - Prototype for Change', value: 'Semester 2 - Prototype for Change' },
+          { title: 'Semester 3 - System Change', value: 'Semester 3 - System Change' },
           { title: 'Capstone', value: 'Capstone' },
         ],
       },
-    }),
-    defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Climate Change', value: 'Climate Change' },
-          { title: 'Digital Inclusion', value: 'Digital Inclusion' },
-          { title: 'Social Innovation', value: 'Social Innovation' },
-          { title: 'Digital Innovation', value: 'Digital Innovation' },
-        ],
-      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'tags',
@@ -119,10 +99,41 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'externalLink',
-      title: 'External Link',
-      type: 'url',
-      description: 'Optional external link to project demo, repository, or related content',
+      name: 'externalLinks',
+      title: 'External Links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+              description: 'Optional label for the link (e.g., "GitHub", "Live Demo")',
+            },
+          ],
+          preview: {
+            select: {
+              url: 'url',
+              label: 'label',
+            },
+            prepare({ url, label }) {
+              return {
+                title: label || url,
+                subtitle: url,
+              }
+            },
+          },
+        },
+      ],
+      description: 'External links to project demos, repositories, or related content',
     }),
     defineField({
       name: 'connectedPartner',
@@ -240,13 +251,13 @@ export default defineType({
     select: {
       title: 'title',
       media: 'image',
-      year: 'year',
+      semester: 'semester',
     },
     prepare(selection) {
-      const { title, year } = selection
+      const { title, semester } = selection
       return {
         ...selection,
-        subtitle: year,
+        subtitle: semester,
       }
     },
   },

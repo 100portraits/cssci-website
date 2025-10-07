@@ -19,8 +19,7 @@ export const FEATURED_PROJECTS_QUERY = groq`*[_type == "project" && featured == 
   slug,
   hasDetailPage,
   image,
-  year,
-  category,
+  semester,
   tags,
   externalLink,
   order,
@@ -45,6 +44,7 @@ export const FEATURED_TESTIMONIALS_QUERY = groq`*[_type == "testimonial" && feat
 export const ABOUT_PAGE_QUERY = groq`*[_type == "aboutPage"][0]{
   title,
   content,
+  heroImage,
   sections
 }`
 
@@ -52,6 +52,7 @@ export const ABOUT_PAGE_QUERY = groq`*[_type == "aboutPage"][0]{
 export const IMPACT_PAGE_QUERY = groq`*[_type == "impactPage"][0]{
   title,
   content,
+  heroImage,
   impactCards,
   ctaText
 }`
@@ -64,8 +65,7 @@ export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _cre
   slug,
   hasDetailPage,
   image,
-  year,
-  category,
+  semester,
   tags,
   externalLink,
   order,

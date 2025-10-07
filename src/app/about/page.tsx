@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { client } from '@/sanity/lib/client'
+import { client, urlFor } from '@/sanity/lib/client'
 import { ABOUT_PAGE_QUERY } from '@/sanity/lib/queries'
 import PortableTextContent from '@/components/PortableTextContent'
 
@@ -53,12 +53,21 @@ export default async function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl transform rotate-3"></div>
               <div className="relative bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div className="aspect-[4/3] relative">
-                  <Image
-                    src="/DSC_1001.jpg"
-                    alt="CSSci students collaborating"
-                    fill
-                    className="object-cover"
-                  />
+                  {aboutData?.heroImage ? (
+                    <Image
+                      src={urlFor(aboutData.heroImage).width(800).height(600).url()}
+                      alt="CSSci students collaborating"
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src="/DSC_1001.jpg"
+                      alt="CSSci students collaborating"
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end justify-center">
                     <div className="text-center p-8">
                       <div className="text-4xl md:text-6xl font-bold text-white mb-4"><span className="underline underline-offset-4">CSS</span>ci</div>

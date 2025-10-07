@@ -9,7 +9,7 @@ import { PROJECTS_QUERY } from '@/sanity/lib/queries'
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<any[]>([])
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedSemester, setSelectedSemester] = useState('All')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -27,18 +27,18 @@ export default function ProjectsPage() {
     fetchProjects()
   }, [])
 
-  const categories = useMemo(() => {
-    const uniqueCategories = new Set<string>()
+  const semesters = useMemo(() => {
+    const uniqueSemesters = new Set<string>()
     projects.forEach(project => {
-      if (project.category) uniqueCategories.add(project.category)
+      if (project.semester) uniqueSemesters.add(project.semester)
     })
-    return ['All', ...Array.from(uniqueCategories)]
+    return ['All', ...Array.from(uniqueSemesters)]
   }, [projects])
 
   const filteredProjects = useMemo(() => {
-    if (selectedCategory === 'All') return projects
-    return projects.filter(project => project.category === selectedCategory)
-  }, [projects, selectedCategory])
+    if (selectedSemester === 'All') return projects
+    return projects.filter(project => project.semester === selectedSemester)
+  }, [projects, selectedSemester])
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -50,7 +50,7 @@ export default function ProjectsPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              Student Projects
+              Projects
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Explore the innovative solutions our students have developed in collaboration 
@@ -58,19 +58,19 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          {/* Category Filter */}
+          {/* Semester Filter */}
           <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
+            {semesters.map((semester) => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={semester}
+                onClick={() => setSelectedSemester(semester)}
                 className={`px-6 py-2 rounded-full transition-all font-medium ${
-                  selectedCategory === category
+                  selectedSemester === semester
                     ? 'bg-primary border text-primary-foreground'
                     : 'bg-white border border-primary text-gray-700 hover:bg-primary hover:text-primary-foreground'
                 }`}
               >
-                {category}
+                {semester}
               </button>
             ))}
           </div>
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
                   title={project.title}
                   description={project.previewDescription}
                   image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
-                  year={project.year}
+                  semester={project.semester}
                   tags={project.tags}
                   slug={project.slug?.current}
                   hasDetailPage={project.hasDetailPage}

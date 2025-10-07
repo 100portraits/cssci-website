@@ -15,12 +15,10 @@ const PROJECT_DETAIL_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   previewDescription,
   slug,
   image,
-  year,
   semester,
-  category,
   tags,
   studentNames,
-  externalLink,
+  externalLinks,
   connectedPartner->{
     name,
     category,
@@ -178,20 +176,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             )}
 
-            {/* External Link */}
-            {project.externalLink && (
-              <div className="mb-8">
-                <a
-                  href={project.externalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors px-6 py-3 rounded-lg font-medium"
-                >
-                  View Live Project
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
+            {/* External Links */}
+            {project.externalLinks && project.externalLinks.length > 0 && (
+              <div className="mb-8 flex flex-wrap gap-4">
+                {project.externalLinks.map((link: any, index: number) => (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition-colors px-6 py-3 rounded-lg font-medium"
+                  >
+                    <span className="break-all">{link.label || link.url}</span>
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                ))}
               </div>
             )}
           </div>

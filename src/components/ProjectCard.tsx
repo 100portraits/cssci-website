@@ -8,7 +8,7 @@ interface ProjectCardProps {
   title: string
   description: string
   image?: string
-  year?: string
+  semester?: string
   tags?: string[]
   link?: string
   slug?: string
@@ -24,7 +24,7 @@ interface ProjectCardProps {
 
 
 
-export default function ProjectCard({ title, description, image, year, tags = [], link, slug, hasDetailPage, connectedPartner }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, semester, tags = [], link, slug, hasDetailPage, connectedPartner }: ProjectCardProps) {
   const router = useRouter()
 
   const handlePartnerClick = (e: React.MouseEvent, partnerSlug: string) => {
@@ -44,9 +44,9 @@ export default function ProjectCard({ title, description, image, year, tags = []
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          {year && (
+          {semester && (
             <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full">
-              <span className="text-sm font-medium text-primary">{year}</span>
+              <span className="text-sm font-medium text-primary">{semester}</span>
             </div>
           )}
         </div>
@@ -119,7 +119,7 @@ export default function ProjectCard({ title, description, image, year, tags = []
     return (
       <Link
         href={`/projects/${slug}`}
-        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col block"
+        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
       >
         {content}
       </Link>

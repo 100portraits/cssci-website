@@ -29,6 +29,15 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Main hero image displayed on the left side of the page',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'impactCards',
       title: 'Impact Cards',
       type: 'array',

@@ -7,6 +7,7 @@ import testimonial from './schemaTypes/testimonial'
 import aboutPage from './schemaTypes/aboutPage'
 import impactPage from './schemaTypes/impactPage'
 import faq from './schemaTypes/faq'
+import footer from './schemaTypes/footer'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -17,5 +18,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     partner,
     testimonial,
     faq,
+    footer,
   ],
 }

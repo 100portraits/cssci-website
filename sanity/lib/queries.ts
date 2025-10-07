@@ -94,3 +94,14 @@ export const FAQS_QUERY = groq`*[_type == "faq"] | order(order asc, _createdAt d
   question,
   answer
 }`
+
+// Footer
+export const FOOTER_QUERY = groq`*[_type == "footer"][0]{
+  brandText,
+  contactEmail,
+  addressLine1,
+  addressLine2,
+  addressLine3,
+  programLinks,
+  partnershipLinks
+}`

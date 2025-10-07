@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 import { FAQS_QUERY } from '@/sanity/lib/queries'
 import ContactForm from '@/components/ContactForm'
@@ -263,15 +262,15 @@ export default function BecomePartnerPage() {
                 capability, delivering comprehensive solutions that include digital interventions, 
                 data analysis, and strategic recommendations.
               </p>
-              <Link
-                href="/contact"
+              <button
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
                 className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all transform hover:scale-105 font-medium text-lg"
               >
                 Contact Us
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -440,7 +439,7 @@ export default function BecomePartnerPage() {
       </section>
 
       {/* Partner Contact */}
-      <section className="py-20 bg-muted/40">
+      <section id="contact-form" className="py-20 bg-muted/40">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
           <p className="text-lg text-gray-600 mb-6">

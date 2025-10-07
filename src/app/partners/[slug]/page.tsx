@@ -182,7 +182,7 @@ export default async function PartnerPage({ params }: PartnerPageProps) {
                   title={project.title}
                   description={project.previewDescription}
                   image={project.image ? urlFor(project.image).width(400).height(300).url() : undefined}
-                  year={project.year}
+                  semester={project.semester}
                   tags={project.tags}
                   slug={project.slug?.current}
                   hasDetailPage={project.hasDetailPage}

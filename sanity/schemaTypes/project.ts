@@ -74,10 +74,10 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Semester 1 - Infographic', value: 'Semester 1 - Infographic' },
-          { title: 'Semester 2 - Prototype for Change', value: 'Semester 2 - Prototype for Change' },
-          { title: 'Semester 3 - System Change', value: 'Semester 3 - System Change' },
-          { title: 'Capstone', value: 'Capstone' },
+          { title: 'Infographic', value: 'Infographic' },
+          { title: 'Prototype for Change', value: 'Prototype for Change' },
+          { title: 'System Change / Data Analysis', value: 'System Change / Data Analysis' },
+          { title: 'Graduation Project', value: 'Graduation Project' },
         ],
       },
       validation: (Rule) => Rule.required(),

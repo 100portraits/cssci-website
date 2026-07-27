@@ -57,6 +57,12 @@ export const IMPACT_PAGE_QUERY = groq`*[_type == "impactPage"][0]{
   ctaText
 }`
 
+// Become a Partner page
+export const BECOME_PARTNER_PAGE_QUERY = groq`*[_type == "becomePartnerPage"][0]{
+  masterChallengeEmbedUrl,
+  masterChallengeEmbedHeight
+}`
+
 // All projects
 export const PROJECTS_QUERY = groq`*[_type == "project"] | order(order asc, _createdAt desc){
   _id,

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { client } from '@/sanity/lib/client'
-import { FAQS_QUERY } from '@/sanity/lib/queries'
+import { BECOME_PARTNER_PAGE_QUERY, FAQS_QUERY } from '@/sanity/lib/queries'
 import ContactForm from '@/components/ContactForm'
 
 interface TimelinePhase {
@@ -189,20 +189,27 @@ export default function BecomePartnerPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [faqs, setFaqs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [masterChallengeEmbedUrl, setMasterChallengeEmbedUrl] = useState<string | null>(null)
+  const [masterChallengeEmbedHeight, setMasterChallengeEmbedHeight] = useState(1500)
 
   useEffect(() => {
-    const fetchFaqs = async () => {
+    const fetchPageData = async () => {
       try {
-        const data = await client.fetch(FAQS_QUERY)
-        setFaqs(data || [])
+        const [faqData, pageData] = await Promise.all([
+          client.fetch(FAQS_QUERY),
+          client.fetch(BECOME_PARTNER_PAGE_QUERY),
+        ])
+        setFaqs(faqData || [])
+        setMasterChallengeEmbedUrl(pageData?.masterChallengeEmbedUrl || null)
+        setMasterChallengeEmbedHeight(pageData?.masterChallengeEmbedHeight || 1500)
       } catch (error) {
-        console.error('Error fetching FAQs:', error)
+        console.error('Error fetching become-partner page data:', error)
         setFaqs([])
       } finally {
         setLoading(false)
       }
     }
-    fetchFaqs()
+    fetchPageData()
   }, [])
 
   const currentSemester = semesters.find(s => s.id === selectedSemester) || semesters[0]
@@ -219,6 +226,20 @@ export default function BecomePartnerPage() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 text-center">
             Become a Partner
           </h1>
+
+          {masterChallengeEmbedUrl && (
+            <div className="mb-12 w-full overflow-hidden rounded-2xl bg-white shadow-lg">
+              <iframe
+                src={masterChallengeEmbedUrl}
+                title="Submit a MasterChallenge"
+                width="100%"
+                height={masterChallengeEmbedHeight}
+                className="block w-full border-0"
+                allow="clipboard-write"
+                loading="lazy"
+              />
+            </div>
+          )}
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative">

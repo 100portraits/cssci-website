@@ -24,6 +24,7 @@ export default async function Footer() {
   const partnershipLinks = footerData?.partnershipLinks || [
     { label: 'Current Partners', url: '/partners' },
     { label: 'Projects', url: '/projects' },
+    { label: 'Challenge Spaces', url: '/overview' },
     { label: 'Become a Partner', url: '/become-partner' },
   ]
 

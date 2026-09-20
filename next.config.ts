@@ -6,13 +6,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
-  turbopack: {
-    resolveAlias: {
-      // Ensure single React instance
-      react: require.resolve('react'),
-      'react-dom': require.resolve('react-dom'),
-    }
-  },
 };
 
 export default nextConfig;

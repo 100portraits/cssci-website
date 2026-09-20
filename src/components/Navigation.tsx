@@ -30,6 +30,9 @@ export default function Navigation() {
             <Link href="/projects" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Projects
             </Link>
+            <Link href="/overview" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Challenges
+            </Link>
             <Link 
               href="/become-partner" 
               className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all transform hover:scale-105 font-medium"
@@ -68,6 +71,9 @@ export default function Navigation() {
               </Link>
               <Link href="/projects" className="text-gray-700 hover:text-primary transition-colors font-medium">
                 Projects
+              </Link>
+              <Link href="/overview" className="text-gray-700 hover:text-primary transition-colors font-medium">
+                Challenges
               </Link>
               <Link 
                 href="/become-partner" 

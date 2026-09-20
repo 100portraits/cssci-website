@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import ProjectCard from '@/components/ProjectCard'
-import TestimonialCard from '@/components/TestimonialCard'
 import ImageCarousel from '@/components/ImageCarousel'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/client'
 import {
   HOMEPAGE_QUERY,
   FEATURED_PROJECTS_QUERY,
-  FEATURED_TESTIMONIALS_QUERY
 } from '@/sanity/lib/queries'
 
 export const revalidate = 60 // Revalidate every 60 seconds
@@ -15,20 +13,19 @@ export const revalidate = 60 // Revalidate every 60 seconds
 // Fetch data with error handling
 async function getHomepageData() {
   try {
-    const [homepage, projects, testimonials] = await Promise.all([
+    const [homepage, projects] = await Promise.all([
       client.fetch(HOMEPAGE_QUERY),
       client.fetch(FEATURED_PROJECTS_QUERY),
-      client.fetch(FEATURED_TESTIMONIALS_QUERY)
     ])
-    return { homepage, projects, testimonials }
+    return { homepage, projects }
   } catch (error) {
     console.error('Error fetching homepage data:', error)
-    return { homepage: null, projects: [], testimonials: [] }
+    return { homepage: null, projects: [] }
   }
 }
 
 export default async function Home() {
-  const { homepage, projects, testimonials } = await getHomepageData()
+  const { homepage, projects } = await getHomepageData()
 
   const heroSubtitle = homepage?.heroSubtitle
   const heroDescription = homepage?.heroDescription
@@ -237,34 +234,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      {testimonials.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                What People Say
-              </h2>
-              <p className="text-lg text-gray-600">
-                Hear from our students, partners, and faculty
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial: any) => (
-                <TestimonialCard
-                  key={testimonial._id}
-                  quote={testimonial.quote}
-                  name={testimonial.name}
-                  role={testimonial.role}
-                  organization={testimonial.organization}
-                  image={testimonial.image ? urlFor(testimonial.image).width(100).height(100).url() : undefined}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   )
 }

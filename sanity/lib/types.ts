@@ -98,12 +98,6 @@ export interface ImpactPage {
   ctaText: string
 }
 
-export interface BecomePartnerPage {
-  masterChallengeEmbedUrl?: string
-  masterChallengeEmbedHeight?: number
-}
-
-
 export interface TeamMember {
   _id: string
   name: string
